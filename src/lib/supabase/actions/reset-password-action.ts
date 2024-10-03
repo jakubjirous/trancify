@@ -36,4 +36,4 @@ export default async function resetPasswordAction(formData: FormData) {
   }
 
   encodedRedirect("success", "/protected/reset-password", "Password updated");
-};
+}

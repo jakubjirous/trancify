@@ -9,11 +9,11 @@ export default async function signInWithGithubAction() {
   const origin = headers().get("origin");
 
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
+    provider: "github",
     options: {
-      redirectTo: `${origin}/auth/callback`
-    }
-  })
+      redirectTo: `${origin}/auth/callback`,
+    },
+  });
 
   if (error) {
     return encodedRedirect("error", "/sign-in", error.message);

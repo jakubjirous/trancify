@@ -32,4 +32,4 @@ export default async function signUpAction(formData: FormData) {
       "Thanks for signing up! Please check your email for a verification link.",
     );
   }
-};
+}

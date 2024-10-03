@@ -38,4 +38,4 @@ export default async function forgotPasswordAction(formData: FormData) {
     "/forgot-password",
     "Check your email for a link to reset your password.",
   );
-};
+}

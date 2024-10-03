@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { encodedRedirect } from "@/utils/encoded-redirect";
 import { redirect } from "next/navigation";
 
-export default async function signInAction(formData: FormData)  {
+export default async function signInAction(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -18,4 +18,4 @@ export default async function signInAction(formData: FormData)  {
   }
 
   return redirect("/protected");
-};
+}

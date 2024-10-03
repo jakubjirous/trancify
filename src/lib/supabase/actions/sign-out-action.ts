@@ -7,4 +7,4 @@ export default async function signOutAction() {
   await supabase.auth.signOut();
 
   return redirect("/sign-in");
-};
+}
