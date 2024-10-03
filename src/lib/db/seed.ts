@@ -4,8 +4,12 @@ const prisma = new PrismaClient()
 
 async function seed() {
   console.log('Starting seed process...');
-
+  await seedTracks()
   console.log('Seed process completed successfully.');
+}
+
+async function seedTracks() {
+
 }
 
 seed()

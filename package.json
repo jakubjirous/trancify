@@ -13,9 +13,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "db:migrate": "npx prisma migrate",
+    "db:seed": "npx tsx src/lib/db/seed.ts",
+    "db:enhance": "npx tsx src/lib/db/enhance-metadata.ts",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "5.20.0",
@@ -49,7 +53,6 @@
     "typescript": "5.3.3"
   },
   "prisma": {
-    "schema": "src/lib/prisma/schema.prisma",
-    "seed": "ts-node src/lib/prisma/seed.ts"
+    "schema": "src/lib/db/schema.prisma"
   }
 }
