@@ -1,8 +1,9 @@
-import { signInWithGithubAction, signUpAction } from "@/lib/supabase/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import signInWithGithubAction from "@/lib/supabase/actions/sign-in-with-github-action";
+import signUpAction from "@/lib/supabase/actions/sign-up-action";
 import Link from "next/link";
 
 export default function Signup({ searchParams }: { searchParams: Message }) {
