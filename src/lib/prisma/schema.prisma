@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Track {
+  id       String  @id @default(cuid())
+  name     String
+  artist   String
+  album    String?
+  duration Int // duration in seconds
+  genre    String?
+  bpm      Int?
+  key      String?
+  imageUrl String?
+  audioUrl String
+  isLocal  Boolean @default(true)
+  userId   String // Supabase Auth userID
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  playlists TracksInPlaylists[]
+
+  @@index([name], name: "idx_tracks_name")
+  @@index([artist], name: "idx_tracks_artist")
+  @@index([album], name: "idx_tracks_album")
+  @@index([genre], name: "idx_tracks_genre")
+  @@index([bpm], name: "idx_tracks_bpm")
+  @@index([createdAt], name: "idx_tracks_created_at")
+}
+
+model Playlist {
+  id       String @id @default(cuid())
+  name     String
+  coverUrl String
+  userId   String // Supabase Auth userID
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tracks TracksInPlaylists[]
+
+  @@index([name], name: "idx_playlists_name")
+  @@index([createdAt], name: "idx_playlists_created_at")
+}
+
+model TracksInPlaylists {
+  track   Track  @relation(fields: [trackId], references: [id])
+  trackId String
+
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String
+
+  order Int
+
+  @@id([trackId, playlistId])
+  @@index([trackId], name: "idx_tracks_in_playlists_track_id")
+  @@index([playlistId], name: "idx_tracks_in_playlists_playlist_id")
+  @@index([order], name: "idx_tracks_in_playlists_order")
+}
