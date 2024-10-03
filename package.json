@@ -1,5 +1,17 @@
 {
+  "name": "trancify",
+  "description": "The ultimate music player for trance and progressive lovers, delivering seamless beats and immersive soundscapes",
   "private": true,
+  "version": "1.0.0",
+  "author": {
+    "name": "Jakub Jirous <info@jakubjirous.dev>"
+  },
+  "keywords": ["nextjs", "react", "typescript", "supabase", "tailwind", "music player", "vercel blob", "shadcn-ui", "spotify-clone"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakubjirous/trancify.git"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
