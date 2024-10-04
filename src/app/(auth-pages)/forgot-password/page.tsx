@@ -5,11 +5,13 @@ import { Label } from "@/components/ui/label";
 import forgotPasswordAction from "@/lib/supabase/actions/forgot-password-action";
 import Link from "next/link";
 
-export default function ForgotPassword({
+export default async function ForgotPassword({
   searchParams,
 }: {
-  searchParams: Message;
+  searchParams: Promise<{ message: Message }>;
 }) {
+  const message = (await searchParams).message;
+
   return (
     <>
       <form className="mx-auto flex w-full min-w-64 max-w-64 flex-1 flex-col gap-2 text-foreground [&>input]:mb-6">
@@ -28,7 +30,7 @@ export default function ForgotPassword({
           <SubmitButton formAction={forgotPasswordAction}>
             Reset Password
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          <FormMessage message={message} />
         </div>
       </form>
     </>

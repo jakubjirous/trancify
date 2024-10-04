@@ -6,11 +6,15 @@ import signInWithGithubAction from "@/lib/supabase/actions/sign-in-with-github-a
 import signUpAction from "@/lib/supabase/actions/sign-up-action";
 import Link from "next/link";
 
-export default function Signup({ searchParams }: { searchParams: Message }) {
-  if ("message" in searchParams) {
+export default async function Signup({
+  searchParams,
+}: { searchParams: Promise<{ message: Message }> }) {
+  const message = (await searchParams).message;
+
+  if (message) {
     return (
       <div className="flex h-screen w-full flex-1 items-center justify-center gap-2 p-4 sm:max-w-md">
-        <FormMessage message={searchParams} />
+        <FormMessage message={message} />
       </div>
     );
   }
@@ -39,7 +43,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
           <SubmitButton formAction={signUpAction} pendingText="Signing up...">
             Sign up
           </SubmitButton>
-          <FormMessage message={searchParams} />
+          <FormMessage message={message} />
         </div>
       </form>
       <form>

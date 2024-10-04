@@ -7,8 +7,10 @@ import resetPasswordAction from "@/lib/supabase/actions/reset-password-action";
 export default async function ResetPassword({
   searchParams,
 }: {
-  searchParams: Message;
+  searchParams: Promise<{ message: Message }>;
 }) {
+  const message = (await searchParams).message;
+
   return (
     <form className="flex w-full max-w-md flex-col gap-2 p-4 [&>input]:mb-4">
       <h1 className="font-medium text-2xl">Reset password</h1>
@@ -32,7 +34,7 @@ export default async function ResetPassword({
       <SubmitButton formAction={resetPasswordAction}>
         Reset password
       </SubmitButton>
-      <FormMessage message={searchParams} />
+      <FormMessage message={message} />
     </form>
   );
 }

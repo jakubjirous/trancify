@@ -6,7 +6,11 @@ import signInAction from "@/lib/supabase/actions/sign-in-action";
 import signInWithGithubAction from "@/lib/supabase/actions/sign-in-with-github-action";
 import Link from "next/link";
 
-export default function Login({ searchParams }: { searchParams: Message }) {
+export default async function Login({
+  searchParams,
+}: { searchParams: Promise<{ message: Message }> }) {
+  const message = (await searchParams).message;
+
   return (
     <>
       <form className="flex min-w-64 flex-1 flex-col">
@@ -42,7 +46,7 @@ export default function Login({ searchParams }: { searchParams: Message }) {
             Sign in
           </SubmitButton>
 
-          <FormMessage message={searchParams} />
+          <FormMessage message={message} />
         </div>
       </form>
       <form>

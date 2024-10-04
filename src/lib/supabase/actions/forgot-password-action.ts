@@ -1,14 +1,16 @@
+"use server";
+
 import { createClient } from "@/lib/supabase/server";
 import { encodedRedirect } from "@/utils/encoded-redirect";
-import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function forgotPasswordAction(formData: FormData) {
   const email = formData.get("email")?.toString();
 
   const supabase = createClient();
 
-  const origin = headers().get("origin");
+  const origin = (await headers()).get("origin");
 
   const callbackUrl = formData.get("callbackUrl")?.toString();
 
