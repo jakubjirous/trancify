@@ -7,8 +7,8 @@ CREATE TABLE "Track" (
     "duration" INTEGER NOT NULL,
     "genre" TEXT,
     "bpm" INTEGER,
-    "key" TEXT,
-    "imageUrl" TEXT,
+    "featuring" TEXT,
+    "coverUrl" TEXT,
     "audioUrl" TEXT NOT NULL,
     "isLocal" BOOLEAN NOT NULL DEFAULT true,
     "userId" TEXT NOT NULL,
@@ -40,6 +40,9 @@ CREATE TABLE "TracksInPlaylists" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Track_audioUrl_key" ON "Track"("audioUrl");
+
+-- CreateIndex
 CREATE INDEX "idx_tracks_name" ON "Track"("name");
 
 -- CreateIndex
@@ -56,6 +59,9 @@ CREATE INDEX "idx_tracks_bpm" ON "Track"("bpm");
 
 -- CreateIndex
 CREATE INDEX "idx_tracks_created_at" ON "Track"("createdAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Playlist_name_key" ON "Playlist"("name");
 
 -- CreateIndex
 CREATE INDEX "idx_playlists_name" ON "Playlist"("name");

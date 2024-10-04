@@ -15,18 +15,18 @@ datasource db {
 }
 
 model Track {
-  id       String  @id @default(cuid())
-  name     String
-  artist   String
-  album    String?
-  duration Int // duration in seconds
-  genre    String?
-  bpm      Int?
-  key      String?
-  imageUrl String?
-  audioUrl String
-  isLocal  Boolean @default(true)
-  userId   String // Supabase Auth userID
+  id        String  @id @default(cuid())
+  name      String
+  artist    String
+  album     String?
+  duration  Int // duration in seconds
+  genre     String?
+  bpm       Int?
+  featuring String?
+  coverUrl  String?
+  audioUrl  String  @unique
+  isLocal   Boolean @default(true)
+  userId    String // Supabase Auth userID
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,7 +43,7 @@ model Track {
 
 model Playlist {
   id       String @id @default(cuid())
-  name     String
+  name     String @unique
   coverUrl String
   userId   String // Supabase Auth userID
 
