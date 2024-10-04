@@ -10,7 +10,7 @@ export default async function signUpAction(formData: FormData) {
 
   const supabase = createClient();
 
-  const origin = headers().get("origin");
+  const origin = (await headers()).get("origin");
 
   if (!email || !password) {
     return { error: "Email and password are required" };

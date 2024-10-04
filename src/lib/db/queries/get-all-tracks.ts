@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 
 const prisma = new PrismaClient();
 
-export const getAllTracks = unstable_cache(
+const getAllTracks = unstable_cache(
   async () => {
     return prisma.track.findMany({
       orderBy: {
@@ -14,3 +14,5 @@ export const getAllTracks = unstable_cache(
   ["all-tracks"],
   { tags: ["tracks"] },
 );
+
+export default getAllTracks;

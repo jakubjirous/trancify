@@ -22,7 +22,7 @@ async function cleanup() {
 
     try {
       const result = await generateObject({
-        model: google("gemini-1.5-flash", {
+        model: google("gemini-1.5-pro", {
           structuredOutputs: false,
         }),
         schema: z.object({
