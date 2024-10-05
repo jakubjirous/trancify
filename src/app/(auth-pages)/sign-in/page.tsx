@@ -3,7 +3,6 @@ import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signInAction, signInWithGithubAction } from "@/lib/supabase/actions";
-
 import Link from "next/link";
 
 export default async function Login({
@@ -12,7 +11,7 @@ export default async function Login({
   const message = (await searchParams).message;
 
   return (
-    <>
+    <div>
       <form className="flex min-w-64 flex-1 flex-col">
         <h1 className="font-medium text-2xl">Sign in</h1>
         <p className="text-foreground text-sm">
@@ -57,6 +56,6 @@ export default async function Login({
           Sign in with GitHub
         </SubmitButton>
       </form>
-    </>
+    </div>
   );
 }

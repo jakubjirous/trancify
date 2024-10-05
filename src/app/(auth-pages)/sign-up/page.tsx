@@ -20,7 +20,7 @@ export default async function Signup({
   }
 
   return (
-    <>
+    <div>
       <form className="mx-auto flex min-w-64 max-w-64 flex-col">
         <h1 className="font-medium text-2xl">Sign up</h1>
         <p className="text text-foreground text-sm">
@@ -54,6 +54,6 @@ export default async function Signup({
           Sign in with GitHub
         </SubmitButton>
       </form>
-    </>
+    </div>
   );
 }
