@@ -1,5 +1,6 @@
 "use server";
 
+import ROUTES from "@/config/routes";
 import { createClient } from "@/lib/supabase/server";
 import { encodedRedirect } from "@/utils/encoded-redirect";
 
@@ -12,7 +13,7 @@ export default async function resetPasswordAction(formData: FormData) {
   if (!password || !confirmPassword) {
     encodedRedirect(
       "error",
-      "/protected/reset-password",
+      `${ROUTES.dashboard}${ROUTES.resetPassword}`,
       "Password and confirm password are required",
     );
   }
@@ -20,7 +21,7 @@ export default async function resetPasswordAction(formData: FormData) {
   if (password !== confirmPassword) {
     encodedRedirect(
       "error",
-      "/protected/reset-password",
+      `${ROUTES.dashboard}${ROUTES.resetPassword}`,
       "Passwords do not match",
     );
   }
@@ -32,10 +33,14 @@ export default async function resetPasswordAction(formData: FormData) {
   if (error) {
     encodedRedirect(
       "error",
-      "/protected/reset-password",
+      `${ROUTES.dashboard}${ROUTES.resetPassword}`,
       "Password update failed",
     );
   }
 
-  encodedRedirect("success", "/protected/reset-password", "Password updated");
+  encodedRedirect(
+    "success",
+    `${ROUTES.dashboard}${ROUTES.resetPassword}`,
+    "Password updated",
+  );
 }

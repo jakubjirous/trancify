@@ -1,5 +1,6 @@
 "use server";
 
+import ROUTES from "@/config/routes";
 import { createClient } from "@/lib/supabase/server";
 import { encodedRedirect } from "@/utils/encoded-redirect";
 import { redirect } from "next/navigation";
@@ -16,8 +17,8 @@ export default async function signInAction(formData: FormData) {
   });
 
   if (error) {
-    return encodedRedirect("error", "/sign-in", error.message);
+    return encodedRedirect("error", ROUTES.signIn, error.message);
   }
 
-  return redirect("/protected");
+  return redirect(ROUTES.dashboard);
 }

@@ -1,14 +1,14 @@
-import Hero from "@/components/hero";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
+import ROUTES from "@/config/routes";
+import Link from "next/link";
 
 export default async function Index() {
   return (
-    <>
-      <Hero />
-      <main className="flex flex-1 flex-col gap-6 px-4">
-        <h2 className="mb-4 font-medium text-xl">Next steps</h2>
-        <SignUpUserSteps />
-      </main>
-    </>
+    <main className="grid place-content-center p-8">
+      <ul>
+        <li>
+          <Link href={ROUTES.dashboard}>Dashboard</Link>
+        </li>
+      </ul>
+    </main>
   );
 }
