@@ -6,6 +6,8 @@ import "../styles/tailwind.css";
 
 export const metadata = CONFIG.metadata;
 
+export const viewport = CONFIG.viewport;
+
 export default function RootLayout({
   children,
 }: {

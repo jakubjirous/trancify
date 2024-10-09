@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -6,6 +6,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 interface Config {
   metadata: Metadata;
+  viewport: Viewport;
 }
 
 const CONFIG: Config = {
@@ -14,6 +15,13 @@ const CONFIG: Config = {
     title: "Trancify",
     description:
       "The ultimate music player for trance and progressive lovers, delivering seamless beats and immersive soundscapes",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    viewportFit: "cover",
+    themeColor: "", // TODO: add theme color in HEX (Jakub Jirous 2024-10-05 13:53:12)
   },
 };
 
