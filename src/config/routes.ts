@@ -4,6 +4,9 @@ type Keys =
   | "signUp"
   | "forgotPassword"
   | "dashboard"
+  | "tracks"
+  | "playlist"
+  | "playlists"
   | "resetPassword"
   | "authCallback";
 
@@ -17,6 +20,9 @@ const ROUTES: Routes = {
   signUp: "/sign-up",
   forgotPassword: "/forgot-password",
   dashboard: "/dashboard",
+  tracks: "/dashboard/tracks",
+  playlist: "/dashboard/playlist",
+  playlists: "/dashboard/playlists",
   resetPassword: "/reset-password",
   authCallback: "/auth/callback",
 };
