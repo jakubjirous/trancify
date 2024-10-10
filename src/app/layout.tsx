@@ -1,5 +1,5 @@
 import CONFIG from "@/config/config";
-import Providers from "@/providers/providers";
+import GlobalProviders from "@/providers/global-providers";
 import { GeistSans } from "geist/font/sans";
 import { ReactNode } from "react";
 import "../styles/tailwind.css";
@@ -15,8 +15,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
-      <body className="h-dvh bg-background text-foreground">
-        <Providers>{children}</Providers>
+      <body className="bg-background text-foreground">
+        <GlobalProviders>{children}</GlobalProviders>
       </body>
     </html>
   );
