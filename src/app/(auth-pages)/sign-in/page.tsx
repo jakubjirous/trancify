@@ -20,18 +20,18 @@ export default async function SignIn({
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-md border border-white border-opacity-10 bg-black bg-opacity-50 text-white shadow-2xl backdrop-blur-sm">
+      <Card className="w-full max-w-md border border-white border-opacity-10 bg-background text-foreground text-white shadow-2xl backdrop-blur-sm">
         <CardHeader className="relative text-center">
           <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary p-3 shadow-lg">
             <Music className="h-8 w-8 animate-pulse text-primary-foreground" />
           </div>
-          <h1 className="mb-2 pt-4 font-bold font-heading text-4xl">
+          <h1 className="mb-2 pt-4 font-bold font-heading text-4xl text-foreground">
             Trancify
           </h1>
           <p className="text-zinc-400">Sign in to start your journey</p>
         </CardHeader>
         <CardContent className="space-y-6">
-          <form className="flex flex-col">
+          <form className="flex flex-col text-foreground">
             <SubmitButton
               pendingText="Signing in..."
               formAction={signInWithGithubAction}
@@ -54,7 +54,7 @@ export default async function SignIn({
             </div>
           </div>
 
-          <form className="flex flex-col gap-8">
+          <form className="flex flex-col gap-8 text-foreground">
             <div className="flex flex-col gap-2">
               <Label htmlFor="email">Email</Label>
               <Input name="email" placeholder="you@example.com" required />
@@ -63,7 +63,7 @@ export default async function SignIn({
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
                 <Link
-                  className="text-foreground text-xs underline"
+                  className="text-xs underline"
                   href={ROUTES.forgotPassword}
                 >
                   Forgot Password?

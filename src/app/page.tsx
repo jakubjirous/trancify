@@ -1,4 +1,3 @@
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { buttonVariants } from "@/components/ui/button";
 import ROUTES from "@/config/routes";
 import { cn } from "@/utils/cn";
@@ -15,7 +14,6 @@ export default async function Index() {
           >
             Login
           </Link>
-          <ThemeSwitcher />
         </div>
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
           <div className="absolute inset-0 bg-zinc-900" />
