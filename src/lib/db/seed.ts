@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 import fs from "fs/promises";
-import { parseBuffer, parseFile } from "music-metadata";
+import { parseBuffer } from "music-metadata";
 
 dotenv.config();
 
@@ -191,6 +191,7 @@ async function seedPlaylists() {
         trackId: track.id,
         playlistId: playlist.id,
         order: index,
+        userId: USER_ID,
       }));
 
     await prisma.tracksInPlaylists.createMany({
