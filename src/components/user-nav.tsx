@@ -44,7 +44,7 @@ export default function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="secondary" size="icon" className="rounded-full">
           {user?.user_metadata?.avatar_url ? (
-            <Avatar className="h-9 w-9">
+            <Avatar className="h-10 w-10">
               <AvatarImage
                 src={user?.user_metadata?.avatar_url}
                 alt={user?.user_metadata?.email}

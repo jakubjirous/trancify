@@ -10,6 +10,7 @@ export default async function PlaylistPage({
 }) {
   const id = (await params).id;
 
+  // TODO: remove and use useUser hook instead (Jakub Jirous 2024-10-11 08:36:45)
   const supabase = createClient();
 
   const {

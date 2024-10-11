@@ -1,6 +1,6 @@
 "use client";
 
-import { Playlist } from "@/lib/db/types";
+import { Playlist, PlaylistWithArtists } from "@/lib/db/types";
 import {
   ReactNode,
   createContext,
@@ -11,6 +11,7 @@ import {
 } from "react";
 
 type PlaylistContextType = {
+  playlistsWithArtists: PlaylistWithArtists[];
   playlists: Playlist[];
   updatePlaylist: (id: string, updates: Partial<Playlist>) => void;
   deletePlaylist: (id: string) => void;
@@ -27,11 +28,15 @@ type OptimisticAction =
 export function PlaylistProvider({
   children,
   playlistsPromise,
+  playlistsWithArtistsPromise,
 }: {
   children: ReactNode;
   playlistsPromise: Promise<Playlist[]>;
+  playlistsWithArtistsPromise: Promise<PlaylistWithArtists[]>;
 }) {
   const initialPlaylists = use(playlistsPromise);
+
+  const playlistsWithArtists = use(playlistsWithArtistsPromise);
 
   const [playlists, setOptimisticPlaylists] = useOptimistic(
     initialPlaylists,
@@ -62,6 +67,7 @@ export function PlaylistProvider({
   const value = useMemo(
     () => ({
       playlists,
+      playlistsWithArtists,
       updatePlaylist,
       deletePlaylist,
     }),

@@ -14,3 +14,7 @@ export type PlaylistWithTracks = Playlist & {
   trackCount: number;
   duration: number;
 };
+
+export type PlaylistWithArtists = Playlist & {
+  tracks: Pick<Track, "id" | "artist">[];
+};

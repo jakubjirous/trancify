@@ -1,7 +1,7 @@
 import ROUTES from "@/config/routes";
 import { PlaylistProvider } from "@/hooks/use-playlist";
 import { UserProvider } from "@/hooks/use-user";
-import { getAllPlaylists } from "@/lib/db/queries";
+import { getAllPlaylists, getAllPlaylistsWithArtists } from "@/lib/db/queries";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
@@ -21,9 +21,14 @@ export default async function ProtectedProviders({
 
   const playlistsPromise = getAllPlaylists(user);
 
+  const playlistsWithArtistsPromise = getAllPlaylistsWithArtists(user);
+
   return (
     <UserProvider user={user}>
-      <PlaylistProvider playlistsPromise={playlistsPromise}>
+      <PlaylistProvider
+        playlistsPromise={playlistsPromise}
+        playlistsWithArtistsPromise={playlistsWithArtistsPromise}
+      >
         {children}
       </PlaylistProvider>
     </UserProvider>

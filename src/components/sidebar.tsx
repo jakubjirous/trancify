@@ -17,7 +17,12 @@ export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className={cn("flex flex-col justify-between", className)}>
+    <aside
+      className={cn(
+        "flex flex-col justify-between border-r border-r-foreground/10",
+        className,
+      )}
+    >
       <div className="pt-4">
         <div className="px-3 py-4">
           <h1 className="mb-2 px-4 font-semibold text-xl tracking-tight">
@@ -69,9 +74,9 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
         <SidebarPlaylists />
       </div>
-      <div className="flex flex-col items-start gap-3 px-4 py-4">
-        <ThemeSwitcher />
+      <div className="flex flex-row items-start gap-3 px-7 pb-4">
         <UserNav />
+        <ThemeSwitcher />
       </div>
     </aside>
   );

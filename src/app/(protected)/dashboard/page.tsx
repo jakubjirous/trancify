@@ -8,6 +8,7 @@ export default async function Page() {
 
   const tracks = await getAllTracks();
 
+  // TODO: remove and use useUser hook instead (Jakub Jirous 2024-10-11 08:36:45)
   const {
     data: { user },
   } = await supabase.auth.getUser();
