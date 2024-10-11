@@ -3,7 +3,7 @@
 import SidebarPlaylists from "@/components/playlist/sidebar-playlists";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
-import UserProfile from "@/components/user-profile";
+import UserNav from "@/components/user-nav";
 import ROUTES from "@/config/routes";
 import { cn } from "@/utils/cn";
 import { House, ListMusic, Music2, Search } from "lucide-react";
@@ -19,10 +19,10 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <aside className={cn("flex flex-col justify-between", className)}>
       <div className="pt-4">
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 font-semibold text-lg tracking-tight">
+        <div className="px-3 py-4">
+          <h1 className="mb-2 px-4 font-semibold text-xl tracking-tight">
             Trancify
-          </h2>
+          </h1>
           <div className="space-y-1">
             <Button
               asChild
@@ -40,7 +40,7 @@ export function Sidebar({ className }: SidebarProps) {
             </Button>
           </div>
         </div>
-        <div className="px-3 py-2">
+        <div className="px-3 py-4">
           <h2 className="mb-2 px-4 font-semibold text-lg tracking-tight">
             Your Library
           </h2>
@@ -71,7 +71,7 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
       <div className="flex flex-col items-start gap-3 px-4 py-4">
         <ThemeSwitcher />
-        <UserProfile />
+        <UserNav />
       </div>
     </aside>
   );
