@@ -86,7 +86,7 @@ const config: Config = {
         "now-playing-1": "now-playing-1 0.8s ease-in-out infinite",
         "now-playing-2": "now-playing-2 1s ease-in-out infinite",
         "now-playing-3": "now-playing-3 1.2s ease-in-out infinite",
-        "spin-slow": "spin 10s linear infinite",
+        "spin-slow": "spin-slow var(--spin-duration, 10s) linear infinite",
       },
     },
   },
