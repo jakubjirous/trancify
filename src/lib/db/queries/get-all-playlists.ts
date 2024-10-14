@@ -7,11 +7,12 @@ import { unstable_cache } from "next/cache";
 const prisma = new PrismaClient();
 
 const getAllPlaylists = unstable_cache(
-  async (user: User) => {
+  async (user: User, limit?: number) => {
     return prisma.playlist.findMany({
       where: {
         userId: user.id,
       },
+      take: limit,
       orderBy: {
         createdAt: "desc",
       },

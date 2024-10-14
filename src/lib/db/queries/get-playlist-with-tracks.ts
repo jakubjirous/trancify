@@ -1,5 +1,6 @@
 "use server";
 
+import normalizeArtistName from "@/utils/normalize-artist-name";
 import { PrismaClient } from "@prisma/client";
 import { User } from "@supabase/auth-js";
 import { unstable_cache } from "next/cache";
@@ -9,7 +10,7 @@ const prisma = new PrismaClient();
 
 const getPlaylistWithTracks = unstable_cache(
   async (user: User, playlistId: Playlist["id"]) => {
-    const result = await prisma.playlist.findUnique({
+    const playlist = await prisma.playlist.findUnique({
       where: {
         id: playlistId,
         userId: user.id,
@@ -26,25 +27,34 @@ const getPlaylistWithTracks = unstable_cache(
       },
     });
 
-    if (!result) return;
+    if (!playlist) return;
 
-    const tracks = result.tracks.map((trackInPlaylist) => ({
-      ...trackInPlaylist,
+    const tracks = playlist.tracks?.map((trackInPlaylist) => ({
+      ...trackInPlaylist.track,
       order: trackInPlaylist.order,
     }));
 
     const tracksCount = tracks.length;
 
-    const duration = tracks.reduce(
-      (total, { track }) => total + track.duration,
-      0,
-    );
+    const duration = tracks.reduce((total, track) => total + track.duration, 0);
+
+    const artistsSet = new Set<string>();
+
+    playlist.tracks.splice(0, 3).map(({ track }) => {
+      normalizeArtistName(track.artist).map((normalizedArtist) =>
+        artistsSet.add(normalizedArtist),
+      );
+      if (track.featuring) {
+        artistsSet.add(track.featuring);
+      }
+    });
 
     return {
-      ...result,
-      tracks,
+      ...playlist,
+      artists: [...artistsSet].join(", "),
       tracksCount,
       duration,
+      tracks,
     };
   },
   ["playlist-with-tracks"],
