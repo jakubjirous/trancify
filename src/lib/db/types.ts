@@ -10,11 +10,12 @@ export type TracksInPlaylists = Prisma.TracksInPlaylistsGetPayload<{}>;
 export type NewTracksInPlaylists = Prisma.TracksInPlaylistsCreateInput;
 
 export type PlaylistWithTracks = Playlist & {
+  artists: string;
   tracks: (Track & { order: number })[];
   trackCount: number;
   duration: number;
 };
 
 export type PlaylistWithArtists = Playlist & {
-  tracks: Pick<Track, "id" | "artist">[];
+  artists: string;
 };
