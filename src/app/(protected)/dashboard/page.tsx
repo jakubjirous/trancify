@@ -1,12 +1,16 @@
+import PlaylistCards from "@/components/playlist/playlist-cards";
+import Title from "@/components/title";
+import TableWithTracks from "@/components/tracks/table-with-tracks";
 import ROUTES from "@/config/routes";
 import { getAllTracks } from "@/lib/db/queries";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import React from "react";
 
 export default async function Page() {
   const supabase = createClient();
 
-  const tracks = await getAllTracks();
+  const tracks = await getAllTracks(5);
 
   // TODO: remove and use useUser hook instead (Jakub Jirous 2024-10-11 08:36:45)
   const {
@@ -18,19 +22,14 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-12 overflow-auto">
-      <div className="flex flex-col items-start gap-2">
-        <h1>User</h1>
-        <pre className="overflow-auto rounded border p-3 font-mono text-xs">
-          {JSON.stringify(user, null, 2)}
-        </pre>
-      </div>
-      <div className="flex flex-col items-start gap-2">
-        <h1>Tracks</h1>
-        <pre className=" overflow-auto rounded border p-3 font-mono text-xs">
-          {JSON.stringify(tracks, null, 2)}
-        </pre>
-      </div>
+    <div className="grid h-full grid-rows-[16rem,minmax(0,1fr)] gap-y-8">
+      <section>
+        <Title title="Made for you" />
+        <PlaylistCards limit={2} onIndex />
+      </section>
+      <section className="border-t border-t-foreground/10">
+        <TableWithTracks tracks={tracks} headerStyles="bg-background" />
+      </section>
     </div>
   );
 }
