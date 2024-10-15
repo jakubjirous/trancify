@@ -1,10 +1,8 @@
-import PlaylistNavigation from "@/components/playlist/playlist-navigation";
+import PlaylistHero from "@/components/playlist/playlist-hero";
 import TableWithTracks from "@/components/tracks/table-with-tracks";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ROUTES from "@/config/routes";
 import { getPlaylistWithTracks } from "@/lib/db/queries";
 import { createClient } from "@/lib/supabase/server";
-import { Disc3 } from "lucide-react";
 import { notFound, redirect } from "next/navigation";
 import React from "react";
 
@@ -33,33 +31,12 @@ export default async function PlaylistPage({
   }
 
   return (
-    <div className="relative grid h-full grid-rows-[16rem,minmax(0,1fr)] gap-y-4 bg-gradient-to-b from-transparent to-50% to-background">
+    <div className="relative grid h-full grid-rows-[18rem,minmax(0,1fr)] gap-y-4 bg-gradient-to-b from-transparent to-50% to-background">
       <div
         className="-z-10 absolute inset-0 animate-scale-image bg-center bg-cover opacity-30"
         style={{ backgroundImage: `url(${playlist.coverUrl})` }}
       />
-      <section className="px-8 pt-4">
-        <PlaylistNavigation playlistId={id} />
-        <div className="flex items-start space-x-6">
-          <Avatar className="h-40 w-40 rounded-md object-cover">
-            <AvatarImage
-              src={playlist.coverUrl}
-              alt="Playlist cover"
-              className="object-cover"
-            />
-            <AvatarFallback className="rounded-md">
-              <Disc3 className="h-28 w-28" />
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex h-40 flex-col justify-end">
-            <h6 className="mb-2 font-medium text-sm">Playlist</h6>
-            <h1 className="mb-4 font-bold text-5xl">{playlist.name}</h1>
-            <p className="mb-1 text-muted-foreground text-sm">
-              {playlist.artists} and more
-            </p>
-          </div>
-        </div>
-      </section>
+      <PlaylistHero playlist={playlist} />
       <section>
         <TableWithTracks
           tracks={playlist.tracks}
