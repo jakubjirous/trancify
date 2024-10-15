@@ -35,12 +35,12 @@ export function Sidebar({ className }: SidebarProps) {
               className="w-full justify-start"
             >
               <Link href={ROUTES.dashboard}>
-                <House className="mr-2 h-4 w-4" />
+                <House className="mr-2 size-4" />
                 Home
               </Link>
             </Button>
             <Button variant="ghost" className="w-full justify-start">
-              <Search className="mr-2 h-4 w-4" />
+              <Search className="mr-2 size-4" />
               Search
             </Button>
           </div>
@@ -56,7 +56,7 @@ export function Sidebar({ className }: SidebarProps) {
               className="w-full justify-start"
             >
               <Link href={ROUTES.playlists}>
-                <ListMusic className="mr-2 h-4 w-4" />
+                <ListMusic className="mr-2 size-4" />
                 Playlists
               </Link>
             </Button>
@@ -66,7 +66,7 @@ export function Sidebar({ className }: SidebarProps) {
               className="w-full justify-start"
             >
               <Link href={ROUTES.tracks}>
-                <Music2 className="mr-2 h-4 w-4" />
+                <Music2 className="mr-2 size-4" />
                 Tracks
               </Link>
             </Button>

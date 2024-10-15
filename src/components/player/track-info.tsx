@@ -11,14 +11,14 @@ export default function TrackInfo() {
     <div className="flex items-center space-x-4">
       {currentTrack && (
         <>
-          <Avatar className="flex aspect-square h-16 w-16 items-center justify-center rounded-md">
+          <Avatar className="flex aspect-square size-16 items-center justify-center rounded-md">
             <AvatarImage
               src={currentTrack.coverUrl!}
               alt={`${currentTrack.name} cover`}
               className="object-cover"
             />
             <AvatarFallback className="rounded-md">
-              <Disc3 className="aspect-square w-16" />
+              <Disc3 className="size-16" />
             </AvatarFallback>
           </Avatar>
           <div>

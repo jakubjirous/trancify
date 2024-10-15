@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ROUTES from "@/config/routes";
 import { usePlaylist } from "@/hooks/use-playlist";
@@ -33,20 +34,15 @@ export default function PlaylistCards({
             <Card className="relative overflow-hidden rounded-md border-none bg-secondary">
               <CardContent className="flex items-center p-0">
                 <Avatar
-                  className={cn(
-                    "rounded-md",
-                    onIndex ? "h-40 w-40" : "h-28 w-28",
-                  )}
+                  className={cn("rounded-md", onIndex ? "size-40" : "size-28")}
                 >
                   <AvatarImage
-                    src={coverUrl}
+                    src={coverUrl!}
                     alt={`${name} cover`}
                     className="object-cover"
                   />
                   <AvatarFallback className="rounded-md">
-                    <Disc3
-                      className={cn(onIndex ? "h-40 w-40" : "h-28 w-28")}
-                    />
+                    <Disc3 className={cn(onIndex ? "size-32" : "size-28")} />
                   </AvatarFallback>
                 </Avatar>
 
@@ -69,9 +65,12 @@ export default function PlaylistCards({
                   </p>
                 </div>
                 <div className="absolute inset-0 flex items-end justify-end transition-all duration-300">
-                  <button className="mr-4 mb-4 translate-y-full transform rounded-full bg-primary p-2 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                    <Play size={18} />
-                  </button>
+                  <Button
+                    size="icon"
+                    className="mr-4 mb-4 translate-y-full transform rounded-full bg-primary p-2 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                  >
+                    <Play className={cn(onIndex ? "size-6" : "size-4")} />
+                  </Button>
                 </div>
               </CardContent>
             </Card>

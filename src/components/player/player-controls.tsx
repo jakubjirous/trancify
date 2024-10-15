@@ -24,7 +24,7 @@ export default function PlayerControls() {
           onClick={playPreviousTrack}
           disabled={!currentTrack}
         >
-          <SkipBack className="h-5 w-5" />
+          <SkipBack className="size-5" />
         </Button>
         <Button
           variant="ghost"
@@ -34,9 +34,9 @@ export default function PlayerControls() {
           disabled={!currentTrack}
         >
           {isPlaying ? (
-            <Pause className="h-6 w-6" />
+            <Pause className="size-6" />
           ) : (
-            <Play className="h-6 w-6" />
+            <Play className="size-6" />
           )}
         </Button>
         <Button
@@ -46,7 +46,7 @@ export default function PlayerControls() {
           onClick={playNextTrack}
           disabled={!currentTrack}
         >
-          <SkipForward className="h-5 w-5" />
+          <SkipForward className="size-5" />
         </Button>
       </div>
       <PlayerTimeline />

@@ -50,11 +50,11 @@ export default function PlayerVolume() {
         }}
       >
         {isMuted ? (
-          <VolumeX className="h-5 w-5 text-muted-foreground" />
+          <VolumeX className="size-5 text-muted-foreground" />
         ) : volume > 0 && volume <= 50 ? (
-          <Volume1 className="h-5 w-5 text-muted-foreground" />
+          <Volume1 className="size-5 text-muted-foreground" />
         ) : (
-          <Volume2 className="h-5 w-5 text-muted-foreground" />
+          <Volume2 className="size-5 text-muted-foreground" />
         )}
       </Button>
 

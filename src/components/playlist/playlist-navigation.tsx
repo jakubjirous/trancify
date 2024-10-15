@@ -27,11 +27,11 @@ export default function PlaylistNavigation({
       : playlists[0].id;
 
   return (
-    <div className="mb-6 flex gap-1">
+    <div className="flex gap-1">
       {prevPlaylistId && (
         <Link href={`${ROUTES.playlist}/${prevPlaylistId}`}>
           <Button variant="ghost" size="icon" className="rounded-md">
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="size-6" />
           </Button>
         </Link>
       )}
@@ -39,7 +39,7 @@ export default function PlaylistNavigation({
       {nextPlaylistId && (
         <Link href={`${ROUTES.playlist}/${nextPlaylistId}`}>
           <Button variant="ghost" size="icon" className="rounded-md">
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="size-6" />
           </Button>
         </Link>
       )}
