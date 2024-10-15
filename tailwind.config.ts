@@ -81,12 +81,35 @@ const config: Config = {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        "scale-image": {
+          "0%": {
+            transform: "scale(0.9)",
+            filter: "blur(2rem)",
+          },
+          "100%": {
+            transform: "scale(1)",
+            filter: "blur(0)",
+          },
+        },
+        wave: {
+          "0%": {
+            height: "0.25rem",
+          },
+          "50%": {
+            height: "1rem",
+          },
+          "100%": {
+            height: "0.25rem",
+          },
+        },
       },
       animation: {
         "now-playing-1": "now-playing-1 0.8s ease-in-out infinite",
         "now-playing-2": "now-playing-2 1s ease-in-out infinite",
         "now-playing-3": "now-playing-3 1.2s ease-in-out infinite",
         "spin-slow": "spin-slow var(--spin-duration, 10s) linear infinite",
+        "scale-image": "scale-image 500ms ease-in-out forwards",
+        "wave-bar": "wave 1s infinite",
       },
     },
   },
