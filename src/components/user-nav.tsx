@@ -48,6 +48,7 @@ export default function UserNav() {
               <AvatarImage
                 src={user?.user_metadata?.avatar_url}
                 alt={user?.user_metadata?.email}
+                className="object-cover"
               />
               <AvatarFallback>{user?.user_metadata?.email}</AvatarFallback>
             </Avatar>

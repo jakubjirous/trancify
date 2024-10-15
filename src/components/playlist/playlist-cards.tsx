@@ -43,7 +43,7 @@ export default function PlaylistCards({
                     alt={`${name} cover`}
                     className="object-cover"
                   />
-                  <AvatarFallback>
+                  <AvatarFallback className="rounded-md">
                     <Disc3
                       className={cn(onIndex ? "h-40 w-40" : "h-28 w-28")}
                     />

@@ -1,4 +1,5 @@
 import ROUTES from "@/config/routes";
+import { PlayerProvider } from "@/hooks/use-player";
 import { PlaylistProvider } from "@/hooks/use-playlist";
 import { UserProvider } from "@/hooks/use-user";
 import { getAllPlaylists, getAllPlaylistsWithArtists } from "@/lib/db/queries";
@@ -29,7 +30,7 @@ export default async function ProtectedProviders({
         playlistsPromise={playlistsPromise}
         playlistsWithArtistsPromise={playlistsWithArtistsPromise}
       >
-        {children}
+        <PlayerProvider>{children}</PlayerProvider>
       </PlaylistProvider>
     </UserProvider>
   );
