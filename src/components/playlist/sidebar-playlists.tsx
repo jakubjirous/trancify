@@ -1,68 +1,61 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SidebarPlaylistItem from "@/components/playlist/sidebar-playlist-item";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ROUTES from "@/config/routes";
 import { usePlaylist } from "@/hooks/use-playlist";
-import { cn } from "@/utils/cn";
-import { Disc3 } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { useUser } from "@/hooks/use-user";
+import { createPlaylistAction } from "@/lib/actions";
+import { Playlist } from "@/lib/db/types";
+import { createId } from "@paralleldrive/cuid2";
+import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function SidebarPlaylists() {
+  const { user } = useUser();
+
   const { playlistsWithArtists, updatePlaylist } = usePlaylist();
 
-  const pathname = usePathname();
+  const router = useRouter();
 
-  const isActive = (id: string) =>
-    useMemo(() => pathname === `${ROUTES.playlist}/${id}`, [pathname]);
+  async function addPlaylistAction() {
+    const newPlaylistId = createId();
+
+    const newPlaylist: Playlist = {
+      id: newPlaylistId,
+      name: "Untitled Playlist",
+      coverUrl: "",
+      userId: user.id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    updatePlaylist(newPlaylistId, newPlaylist);
+    router.prefetch(`${ROUTES.playlist}/${newPlaylistId}`);
+    router.push(`${ROUTES.playlist}/${newPlaylistId}`);
+    createPlaylistAction(user.id, newPlaylistId, newPlaylist.name);
+    router.refresh();
+  }
 
   return (
     <section className="py-2">
-      <h2 className="relative px-7 font-semibold text-lg tracking-tight">
-        Playlists
-      </h2>
+      <div className="flex w-full items-center justify-between pr-4">
+        <h2 className="relative px-7 font-semibold text-lg tracking-tight">
+          Playlists
+        </h2>
+        <form action={addPlaylistAction}>
+          <Button size="icon" variant="ghost" type="submit">
+            <Plus className="size-5" />
+            <span className="sr-only">Add new playlist</span>
+          </Button>
+        </form>
+      </div>
+
       <ScrollArea className="h-[22rem] px-1">
         <ul className="space-y-1 p-2">
-          {playlistsWithArtists?.map(({ id, name, coverUrl, artists }, i) => (
-            <li>
-              <Button
-                key={id}
-                asChild
-                size="sidebar"
-                variant={isActive(id) ? "default" : "ghost"}
-                className="w-full justify-start font-normal"
-              >
-                <Link href={`${ROUTES.playlist}/${id}`}>
-                  <Avatar className="flex aspect-square h-10 items-center justify-center space-y-0 rounded-md">
-                    <AvatarImage
-                      src={coverUrl}
-                      alt={`${name} cover`}
-                      className="object-cover"
-                    />
-                    <AvatarFallback className="rounded-md">
-                      <Disc3 className="aspect-square w-10" />
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div className="ml-4 space-y-0.5">
-                    <p className="font-medium text-sm leading-none">{name}</p>
-                    <p
-                      className={cn(
-                        "text-sm group-active:text-black",
-                        isActive(id)
-                          ? "text-primary-foreground/50"
-                          : "text-muted-foreground",
-                      )}
-                    >
-                      {artists}
-                    </p>
-                  </div>
-                </Link>
-              </Button>
-            </li>
+          {playlistsWithArtists?.map((playlist) => (
+            <SidebarPlaylistItem key={playlist.id} playlist={playlist} />
           ))}
         </ul>
       </ScrollArea>
