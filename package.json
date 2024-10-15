@@ -25,7 +25,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "next build",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "bunx biome lint --write --unsafe ./src ",
     "format": "bunx biome format --write ./src",
