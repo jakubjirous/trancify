@@ -37,8 +37,12 @@ export default function SidebarPlaylists() {
               >
                 <Link href={`${ROUTES.playlist}/${id}`}>
                   <Avatar className="flex aspect-square h-10 items-center justify-center space-y-0 rounded-md">
-                    <AvatarImage src={coverUrl} alt={`${name} cover`} />
-                    <AvatarFallback>
+                    <AvatarImage
+                      src={coverUrl}
+                      alt={`${name} cover`}
+                      className="object-cover"
+                    />
+                    <AvatarFallback className="rounded-md">
                       <Disc3 className="aspect-square w-10" />
                     </AvatarFallback>
                   </Avatar>
