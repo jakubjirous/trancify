@@ -12,7 +12,7 @@ export type NewTracksInPlaylists = Prisma.TracksInPlaylistsCreateInput;
 export type PlaylistWithTracks = Playlist & {
   artists: string;
   tracks: (Track & { order: number })[];
-  trackCount: number;
+  tracksCount: number;
   duration: number;
 };
 
