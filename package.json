@@ -52,7 +52,7 @@
     "@tailwindcss/postcss": "^4.0.0-alpha.26",
     "ai": "^3.4.9",
     "autoprefixer": "10.4.17",
-    "babel-plugin-react-compiler": "^0.0.0-experimental-734b737-20241003",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-fa06e2c-20241014",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
@@ -74,6 +74,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@types/react": "18.2.46",
     "@types/react-dom": "18.2.18",
     "prisma": "^5.20.0"
