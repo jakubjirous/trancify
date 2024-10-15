@@ -74,7 +74,7 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
         <SidebarPlaylists />
       </div>
-      <div className="flex flex-row items-start gap-3 px-7 pb-4">
+      <div className="flex flex-row items-start gap-3 px-7 pb-8">
         <UserNav />
         <ThemeSwitcher />
       </div>
