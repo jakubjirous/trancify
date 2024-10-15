@@ -6,14 +6,10 @@ import { ReactNode } from "react";
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <ProtectedProviders>
-      <div className="relative grid h-dvh grid-cols-[1fr,4fr] overflow-clip text-foreground">
+      <div className="relative grid h-dvh grid-cols-[1fr,4fr] grid-rows-[1fr,8rem] overflow-clip text-foreground">
         <Sidebar />
-
-        <main className="grid grid-cols-1 grid-rows-[1fr,8rem]">
-          {children}
-
-          <Player />
-        </main>
+        <main>{children}</main>
+        <Player />
 
         <div className="-z-10 -rotate-12 absolute top-[-10vw] left-[-10vw] aspect-square w-[30vw] animate-spin-slow bg-gradient-to-br from-purple-900 to-background blur-[10vw] [--spin-duration:5s]"></div>
       </div>
