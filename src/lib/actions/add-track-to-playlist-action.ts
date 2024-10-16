@@ -5,7 +5,7 @@ import { revalidateTag } from "next/cache";
 
 const prisma = new PrismaClient();
 
-export default async function addToPlaylistAction(
+export default async function addTrackToPlaylistAction(
   playlistId: string,
   trackId: string,
 ) {
