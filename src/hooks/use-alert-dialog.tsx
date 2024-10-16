@@ -72,16 +72,18 @@ export function AlertDialogProvider({ children }: { children: ReactNode }) {
               )}
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel
-                onClick={() => {
-                  if (dialogConfig.onCancel) {
-                    dialogConfig.onCancel();
-                  }
-                  closeDialog();
-                }}
-              >
-                {dialogConfig.cancelLabel}
-              </AlertDialogCancel>
+              {dialogConfig.cancelLabel && (
+                <AlertDialogCancel
+                  onClick={() => {
+                    if (dialogConfig.onCancel) {
+                      dialogConfig.onCancel();
+                    }
+                    closeDialog();
+                  }}
+                >
+                  {dialogConfig.cancelLabel}
+                </AlertDialogCancel>
+              )}
               <AlertDialogAction
                 onClick={() => {
                   dialogConfig.onAction();
