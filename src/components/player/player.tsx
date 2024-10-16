@@ -120,7 +120,7 @@ export default function Player() {
   ]);
 
   return (
-    <footer className="col-span-2 h-[8rem] w-full border-t border-t-foreground/10 px-8 py-4">
+    <footer className="col-span-2 h-[8rem] w-full border-t border-t-muted px-8 py-4">
       <audio ref={audioRef} />
       <div className="grid h-full w-full grid-cols-[1.5fr,2fr,1.5fr] items-center justify-center gap-4">
         <TrackInfo />

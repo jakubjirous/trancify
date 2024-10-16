@@ -22,7 +22,7 @@ export default function TableWithTracks({
     <ScrollArea className="h-full">
       <Table className="w-full">
         <TableHeader className="bg-background/50 backdrop-blur-md">
-          <TableRow className="border-foreground/10 border-b">
+          <TableRow className="border-muted border-b">
             <TableHead className="w-10 pl-8">#</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Album</TableHead>

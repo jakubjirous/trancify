@@ -62,8 +62,8 @@ export default function TrackRow({
     <TableRow
       onClick={onClickTrackRow}
       className={cn(
-        "group cursor-pointer border-foreground/10 border-b",
-        isCurrentTrack ? "bg-foreground/10" : "",
+        "group cursor-pointer border-muted border-b",
+        isCurrentTrack ? "bg-muted" : "",
       )}
     >
       <TableCell className="w-16 pl-8 font-medium text-muted-foreground">

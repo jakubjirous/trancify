@@ -19,7 +19,7 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "flex flex-col justify-between border-r border-r-foreground/10",
+        "flex flex-col justify-between border-r border-r-muted",
         className,
       )}
     >
