@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ROUTES from "@/config/routes";
+import { useAlertDialog } from "@/hooks/use-alert-dialog";
 import { usePlaylist } from "@/hooks/use-playlist";
 import { deletePlaylistAction } from "@/lib/actions";
 import { PlaylistWithTracks } from "@/lib/db/types";
@@ -27,6 +28,8 @@ export default function PlaylistHero({
   const router = useRouter();
 
   const { deletePlaylist } = usePlaylist();
+
+  const { openDialog } = useAlertDialog();
 
   async function handleDeletePlaylist(id: string) {
     deletePlaylist(id);
@@ -79,7 +82,22 @@ export default function PlaylistHero({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-48">
-            <DropdownMenuItem onClick={() => handleDeletePlaylist(id)}>
+            <DropdownMenuItem
+              onClick={() =>
+                openDialog({
+                  title: "Delete from Your Library?",
+                  description: (
+                    <>
+                      This will delete <strong>{name}</strong> playlist from
+                      Your Library.
+                    </>
+                  ),
+                  cancelLabel: "Cancel",
+                  actionLabel: "Delete",
+                  onAction: () => handleDeletePlaylist(id),
+                })
+              }
+            >
               <Trash className="mr-2 size-3" />
               Delete Playlist
             </DropdownMenuItem>
