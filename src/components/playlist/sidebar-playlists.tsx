@@ -24,7 +24,7 @@ export default function SidebarPlaylists() {
 
     const newPlaylist: Playlist = {
       id: newPlaylistId,
-      name: "Untitled Playlist",
+      name: "Trancify Playlist",
       coverUrl: "",
       userId: user.id,
       createdAt: new Date(),

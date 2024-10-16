@@ -14,10 +14,7 @@ export default async function Page() {
         <PlaylistCards limit={2} onIndex />
       </section>
       <section className="border-t border-t-foreground/10">
-        <TableWithTracks
-          tracks={tracks}
-          // headerStyles="bg-background" // TODO: fix this (Jakub Jirous 2024-10-15 08:44:58)
-        />
+        <TableWithTracks tracks={tracks} />
       </section>
     </div>
   );

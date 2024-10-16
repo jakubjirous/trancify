@@ -35,7 +35,12 @@ export default function TableWithTracks({
         </TableHeader>
         <TableBody>
           {tracks.map((track, index) => (
-            <TrackRow key={track.id} track={track} index={index} />
+            <TrackRow
+              key={track.id}
+              track={track}
+              index={index}
+              playlist={playlist}
+            />
           ))}
         </TableBody>
       </Table>

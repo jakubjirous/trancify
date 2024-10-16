@@ -12,25 +12,36 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { useAlertDialog } from "@/hooks/use-alert-dialog";
 import { usePlayer } from "@/hooks/use-player";
 import { usePlaylist } from "@/hooks/use-playlist";
-import { addToPlaylistAction } from "@/lib/actions";
-import { Track } from "@/lib/db/types";
+import {
+  addToPlaylistAction,
+  deleteTrackFromPlaylistAction,
+} from "@/lib/actions";
+import { PlaylistWithTracks, Track } from "@/lib/db/types";
 import { cn } from "@/utils/cn";
 import formatDuration from "@/utils/format-duration";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Disc3, Pause, Play, Plus } from "lucide-react";
+import { Disc3, Pause, Play, Plus, Trash } from "lucide-react";
 import React, { useState } from "react";
 
 export default function TrackRow({
   track,
+  playlist,
   index,
-}: { track: Track; index: number }) {
-  const { coverUrl, name, artist, album, duration } = track;
+}: {
+  track: Track;
+  playlist?: PlaylistWithTracks;
+  index: number;
+}) {
+  const { id, coverUrl, name, artist, album, duration } = track;
 
   const { currentTrack, playTrack, togglePlayPause, isPlaying } = usePlayer();
 
   const { playlists } = usePlaylist();
+
+  const { openDialog } = useAlertDialog();
 
   const isCurrentTrack = currentTrack?.name === name;
 
@@ -153,6 +164,31 @@ export default function TrackRow({
                 ))}
               </DropdownMenuSubContent>
             </DropdownMenuSub>
+            {playlist && (
+              <DropdownMenuItem
+                onClick={() =>
+                  openDialog({
+                    title: "Delete track from Playlist?",
+                    description: (
+                      <>
+                        This will delete{" "}
+                        <strong>
+                          {track.artist} – {track.name}
+                        </strong>{" "}
+                        from <strong>{playlist.name}</strong> playlist.
+                      </>
+                    ),
+                    cancelLabel: "Cancel",
+                    actionLabel: "Delete",
+                    onAction: () =>
+                      deleteTrackFromPlaylistAction(playlist.id, id),
+                  })
+                }
+              >
+                <Trash className="mr-2 size-3" />
+                Delete from Playlist
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>

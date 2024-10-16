@@ -31,17 +31,14 @@ export default async function PlaylistPage({
   }
 
   return (
-    <div className="relative grid h-full grid-rows-[18rem,minmax(0,1fr)] gap-y-4 bg-gradient-to-b from-transparent to-50% to-background">
+    <div className="relative grid h-full grid-rows-[18rem,minmax(0,1fr)] gap-y-4 bg-gradient-to-b from-transparent to-40% to-background">
       <div
         className="-z-10 absolute inset-0 animate-scale-image bg-center bg-cover opacity-30"
         style={{ backgroundImage: `url(${playlist.coverUrl})` }}
       />
       <PlaylistHero playlist={playlist} />
       <section>
-        <TableWithTracks
-          tracks={playlist.tracks}
-          // headerStyles="backdrop-blur-xl" // TODO: fix this (Jakub Jirous 2024-10-14 11:02:30)
-        />
+        <TableWithTracks tracks={playlist.tracks} playlist={playlist} />
       </section>
     </div>
   );
