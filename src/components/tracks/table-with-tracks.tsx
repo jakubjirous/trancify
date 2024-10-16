@@ -1,5 +1,5 @@
 import TrackRow from "@/components/tracks/track-row";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -7,20 +7,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Track } from "@/lib/db/types";
-import { cn } from "@/utils/cn";
+import { PlaylistWithTracks, Track } from "@/lib/db/types";
 import { Clock } from "lucide-react";
 import React from "react";
 
 export default function TableWithTracks({
   tracks,
-  headerStyles,
-}: { tracks: Track[]; headerStyles?: string }) {
+  playlist,
+}: {
+  tracks: Track[];
+  playlist?: PlaylistWithTracks;
+}) {
   return (
-    <ScrollArea className="w-full">
-      <ScrollBar orientation="horizontal" />
+    <ScrollArea className="h-full">
       <Table className="w-full">
-        <TableHeader className={cn(headerStyles)}>
+        <TableHeader className="bg-background/50 backdrop-blur-md">
           <TableRow className="border-foreground/10 border-b">
             <TableHead className="w-10 pl-8">#</TableHead>
             <TableHead>Title</TableHead>

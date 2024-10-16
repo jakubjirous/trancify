@@ -42,7 +42,7 @@ export default function PlaylistCards({
                     className="object-cover"
                   />
                   <AvatarFallback className="rounded-md">
-                    <Disc3 className={cn(onIndex ? "size-32" : "size-28")} />
+                    <Disc3 className={cn(onIndex ? "size-32" : "size-20")} />
                   </AvatarFallback>
                 </Avatar>
 

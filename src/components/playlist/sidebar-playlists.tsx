@@ -52,7 +52,7 @@ export default function SidebarPlaylists() {
         </form>
       </div>
 
-      <ScrollArea className="h-[22rem] px-1">
+      <ScrollArea className="h-[20rem] px-1">
         <ul className="space-y-1 p-2">
           {playlistsWithArtists?.map((playlist) => (
             <SidebarPlaylistItem key={playlist.id} playlist={playlist} />

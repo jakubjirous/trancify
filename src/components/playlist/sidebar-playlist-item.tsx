@@ -35,7 +35,7 @@ export default function SidebarPlaylistItem({
               className="object-cover"
             />
             <AvatarFallback className="rounded-md">
-              <Disc3 className="size-7" />
+              <Disc3 className="size-7 text-foreground" />
             </AvatarFallback>
           </Avatar>
 

@@ -52,22 +52,22 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="space-y-1">
             <Button
               asChild
-              variant={pathname === `${ROUTES.playlists}` ? "default" : "ghost"}
-              className="w-full justify-start"
-            >
-              <Link href={ROUTES.playlists}>
-                <ListMusic className="mr-2 size-4" />
-                Playlists
-              </Link>
-            </Button>
-            <Button
-              asChild
               variant={pathname === `${ROUTES.tracks}` ? "default" : "ghost"}
               className="w-full justify-start"
             >
               <Link href={ROUTES.tracks}>
                 <Music2 className="mr-2 size-4" />
                 Tracks
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant={pathname === `${ROUTES.playlists}` ? "default" : "ghost"}
+              className="w-full justify-start"
+            >
+              <Link href={ROUTES.playlists}>
+                <ListMusic className="mr-2 size-4" />
+                Playlists
               </Link>
             </Button>
           </div>
