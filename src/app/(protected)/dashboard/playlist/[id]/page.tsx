@@ -11,7 +11,7 @@ export default async function PlaylistPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const id = (await params).id;
+  const { id } = await params;
 
   // TODO: remove and use useUser hook instead (Jakub Jirous 2024-10-11 08:36:45)
   const supabase = createClient();
