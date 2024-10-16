@@ -1,5 +1,6 @@
 "use client";
 
+import PlaylistCover from "@/components/playlist/playlist-cover";
 import PlaylistNavigation from "@/components/playlist/playlist-navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -47,16 +48,7 @@ export default function PlaylistHero({
     <section className="flex flex-col gap-4 px-8 pt-4">
       <PlaylistNavigation playlistId={id} />
       <div className="flex items-start space-x-6">
-        <Avatar className="h-40 w-40 rounded-md object-cover">
-          <AvatarImage
-            src={coverUrl!}
-            alt="Playlist cover"
-            className="object-cover"
-          />
-          <AvatarFallback className="rounded-md">
-            <Disc3 className="h-28 w-28" />
-          </AvatarFallback>
-        </Avatar>
+        <PlaylistCover playlistId={id} coverUrl={coverUrl} />
         <div className="flex h-40 flex-col justify-end">
           <h6 className="mb-2 font-medium text-sm">Playlist</h6>
           <h1 className="mb-4 font-bold text-5xl">{name}</h1>
