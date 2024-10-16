@@ -1,4 +1,5 @@
 import ROUTES from "@/config/routes";
+import { AlertDialogProvider } from "@/hooks/use-alert-dialog";
 import { PlayerProvider } from "@/hooks/use-player";
 import { PlaylistProvider } from "@/hooks/use-playlist";
 import { UserProvider } from "@/hooks/use-user";
@@ -30,7 +31,9 @@ export default async function ProtectedProviders({
         playlistsPromise={playlistsPromise}
         playlistsWithArtistsPromise={playlistsWithArtistsPromise}
       >
-        <PlayerProvider>{children}</PlayerProvider>
+        <PlayerProvider>
+          <AlertDialogProvider>{children}</AlertDialogProvider>
+        </PlayerProvider>
       </PlaylistProvider>
     </UserProvider>
   );
