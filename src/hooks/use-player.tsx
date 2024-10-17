@@ -23,8 +23,7 @@ type PlayerContextType = {
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   setPlaylist: (tracks: Track[]) => void;
-
-  audioRef: RefObject<HTMLAudioElement>;
+  audioRef: RefObject<HTMLAudioElement | null>;
 
   // activePanel: Panel;
   // setActivePanel: (panel: Panel) => void;
@@ -46,7 +45,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const [playlist, setPlaylist] = useState<Track[]>([]);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const togglePlayPause = useCallback(() => {
     if (audioRef.current) {
