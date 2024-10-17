@@ -20,6 +20,7 @@ type PlayerContextType = {
   playTrack: (track: Track) => void;
   playNextTrack: () => void;
   playPreviousTrack: () => void;
+  updateTrack: (track: Track) => void;
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   setPlaylist: (tracks: Track[]) => void;
@@ -94,6 +95,15 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     }
   }, [currentTrack, playlist, playTrack]);
 
+  const updateTrack = useCallback(
+    (track: Track) => {
+      setCurrentTrack((prevState) =>
+        prevState ? { ...prevState, ...track } : null,
+      );
+    },
+    [currentTrack, setCurrentTrack],
+  );
+
   return (
     <PlayerContext.Provider
       value={{
@@ -105,6 +115,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         playTrack,
         playNextTrack,
         playPreviousTrack,
+        updateTrack,
         setCurrentTime,
         setDuration,
         setPlaylist,
