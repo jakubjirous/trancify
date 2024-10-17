@@ -102,7 +102,6 @@ async function seedTracks() {
         coverUrl,
         audioUrl,
         isLocal: false,
-        userId: USER_ID,
       };
 
       await prisma.track.upsert({
