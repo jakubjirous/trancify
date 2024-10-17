@@ -39,11 +39,11 @@ export default function SidebarPlaylistItem({
             </AvatarFallback>
           </Avatar>
 
-          <div className="ml-4 space-y-0.5">
+          <div className="ml-4 min-w-0 space-y-0.5">
             <p className="font-medium text-sm leading-none">{name}</p>
             <p
               className={cn(
-                "text-sm group-active:text-black",
+                "truncate text-sm group-active:text-black",
                 isActive(id)
                   ? "text-primary-foreground/50"
                   : "text-muted-foreground",
