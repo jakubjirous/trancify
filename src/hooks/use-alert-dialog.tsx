@@ -21,10 +21,10 @@ import {
 type AlertDialogConfig = {
   title: string;
   description?: ReactNode;
-  cancelLabel: string;
+  cancelLabel?: string;
   actionLabel: string;
   onCancel?: () => void;
-  onAction: () => void;
+  onAction?: () => void;
 };
 
 type AlertDialogContext = {
@@ -86,7 +86,9 @@ export function AlertDialogProvider({ children }: { children: ReactNode }) {
               )}
               <AlertDialogAction
                 onClick={() => {
-                  dialogConfig.onAction();
+                  if (dialogConfig.onAction) {
+                    dialogConfig.onAction();
+                  }
                   closeDialog();
                 }}
               >
