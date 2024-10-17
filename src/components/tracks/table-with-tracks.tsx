@@ -1,3 +1,5 @@
+"use client";
+
 import TrackRow from "@/components/tracks/track-row";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -7,9 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { usePlayer } from "@/hooks/use-player";
 import { PlaylistWithTracks, Track } from "@/lib/db/types";
 import { Clock } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function TableWithTracks({
   tracks,
@@ -18,6 +21,12 @@ export default function TableWithTracks({
   tracks: Track[];
   playlist?: PlaylistWithTracks;
 }) {
+  const { setPlaylist } = usePlayer();
+
+  useEffect(() => {
+    setPlaylist(tracks);
+  }, [tracks, setPlaylist]);
+
   return (
     <ScrollArea className="h-full">
       <Table className="w-full">
