@@ -1,11 +1,12 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CONSTRAINTS from "@/config/constraints";
 import { useAlertDialog } from "@/hooks/use-alert-dialog";
 import { uploadPlaylistCoverAction } from "@/lib/actions";
 import { cn } from "@/utils/cn";
 import { Disc3, Loader2, Upload } from "lucide-react";
-import React, { useActionState } from "react";
+import React, { ChangeEvent, useActionState } from "react";
 
 export default function PlaylistCover({
   playlistId,
@@ -23,6 +24,23 @@ export default function PlaylistCover({
 
   const currentCoverUrl = state.success ? state.coverUrl : coverUrl;
 
+  const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      if (file.size <= CONSTRAINTS.maxFileSize) {
+        e.target.form?.requestSubmit();
+      } else {
+        openDialog({
+          title: "Playlist cover too large",
+          description: "The file size is too large. Maximum file size is 5MB.",
+          actionLabel: "OK",
+        });
+        e.target.value = "";
+      }
+    }
+  };
+
   return (
     <div className="group relative rounded-md">
       <Avatar className="size-40 rounded-md object-cover">
@@ -38,8 +56,11 @@ export default function PlaylistCover({
 
       <form
         action={formAction}
+        tabIndex={0}
         className={cn(
-          "translate-opacity absolute inset-0 rounded-md bg-muted/50 opacity-0 backdrop-blur duration-300 group-hover:opacity-100",
+          "translate-opacity absolute inset-0 rounded-md bg-muted/50 backdrop-blur duration-300 ",
+          "opacity-0 focus-within:opacity-100 group-hover:opacity-100",
+          "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           pending ? "opacity-100" : "",
         )}
       >
@@ -54,20 +75,7 @@ export default function PlaylistCover({
             name="file"
             accept="image/*"
             className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-
-              console.log("file", file);
-
-              if (file) {
-                if (file.size <= 1 * 1024 * 1024) {
-                  e.target.form?.requestSubmit();
-                } else {
-                  alert("File size exceeds 1 MB limit");
-                  e.target.value = "";
-                }
-              }
-            }}
+            onChange={handleSubmit}
           />
           {pending ? (
             <Loader2 className="size-8 animate-spin text-muted-foreground" />
