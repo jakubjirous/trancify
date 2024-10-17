@@ -26,12 +26,15 @@ export default function PlaylistCards({
       {playlistsWithArtists
         .slice(0, limit)
         .map(({ id, name, coverUrl, artists }) => (
-          <Link
-            key={id}
-            href={`${ROUTES.playlist}/${id}`}
-            className="group block"
-          >
-            <Card className="relative overflow-hidden rounded-md border-none bg-secondary">
+          <Card className="relative rounded-md border-none bg-muted">
+            <Link
+              key={id}
+              href={`${ROUTES.playlist}/${id}`}
+              className={cn(
+                "group block rounded-md",
+                "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              )}
+            >
               <CardContent className="flex items-center p-0">
                 <Avatar
                   className={cn("rounded-md", onIndex ? "size-40" : "size-28")}
@@ -68,13 +71,14 @@ export default function PlaylistCards({
                   <Button
                     size="icon"
                     className="mr-4 mb-4 translate-y-full transform rounded-full bg-primary p-2 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                    tabIndex={-1}
                   >
                     <Play className={cn(onIndex ? "size-6" : "size-4")} />
                   </Button>
                 </div>
               </CardContent>
-            </Card>
-          </Link>
+            </Link>
+          </Card>
         ))}
     </div>
   );
