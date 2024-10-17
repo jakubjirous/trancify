@@ -19,7 +19,7 @@ export default function SidebarPlaylists() {
 
   const router = useRouter();
 
-  async function addPlaylistAction() {
+  const addPlaylistAction = async () => {
     const newPlaylistId = createId();
 
     const newPlaylist: Playlist = {
@@ -36,7 +36,7 @@ export default function SidebarPlaylists() {
     router.push(`${ROUTES.playlist}/${newPlaylistId}`);
     createPlaylistAction(user.id, newPlaylistId, newPlaylist.name);
     router.refresh();
-  }
+  };
 
   return (
     <section className="py-2">
