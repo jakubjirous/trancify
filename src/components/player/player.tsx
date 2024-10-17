@@ -23,16 +23,19 @@ export default function Player() {
     if (audio) {
       const updateTime = () => setCurrentTime(audio.currentTime);
       const updateDuration = () => setDuration(audio.duration);
+      const handleTrackEnd = () => playNextTrack();
 
       audio.addEventListener("timeupdate", updateTime);
       audio.addEventListener("loadedmetadata", updateDuration);
+      audio.addEventListener("ended", handleTrackEnd);
 
       return () => {
         audio.removeEventListener("timeupdate", updateTime);
         audio.removeEventListener("loadedmetadata", updateDuration);
+        audio.removeEventListener("ended", handleTrackEnd);
       };
     }
-  }, [audioRef, setCurrentTime, setDuration]);
+  }, [audioRef, setCurrentTime, setDuration, playNextTrack]);
 
   useEffect(() => {
     if ("mediaSession" in navigator && currentTrack) {
