@@ -47,7 +47,7 @@ export default function TrackRow({
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  function onClickTrackRow(e: React.MouseEvent) {
+  const onClickTrackRow = (e: React.MouseEvent) => {
     e.preventDefault();
     // setActivePanel('tracklist');
     // onSelect();
@@ -56,7 +56,7 @@ export default function TrackRow({
     } else {
       playTrack(track);
     }
-  }
+  };
 
   return (
     <TableRow
@@ -111,7 +111,7 @@ export default function TrackRow({
       </TableCell>
       <TableCell
         className={cn(
-          "opacity-0 transition-opacity group-hover:opacity-100",
+          "opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100",
           dropdownOpen ? "opacity-100" : "",
         )}
       >
@@ -166,7 +166,8 @@ export default function TrackRow({
             </DropdownMenuSub>
             {playlist && (
               <DropdownMenuItem
-                onClick={() =>
+                onClick={(e) => {
+                  e.stopPropagation();
                   openDialog({
                     title: "Delete track from Playlist?",
                     description: (
@@ -182,8 +183,8 @@ export default function TrackRow({
                     actionLabel: "Delete",
                     onAction: () =>
                       deleteTrackFromPlaylistAction(playlist.id, id),
-                  })
-                }
+                  });
+                }}
               >
                 <Trash className="mr-2 size-3" />
                 Delete from Playlist
