@@ -22,7 +22,9 @@ export default function EditableName({
     e.preventDefault();
     setIsEditing(false);
 
-    if (name.trim() !== "" && name !== initialName) {
+    const trimmedName = name.trim();
+
+    if (trimmedName !== "" && trimmedName !== initialName) {
       updatePlaylist(playlistId, { name });
       await updatePlaylistNameAction(playlistId, name);
     } else {
@@ -38,13 +40,22 @@ export default function EditableName({
 
   if (isEditing) {
     return (
-      <form onSubmit={handleSubmit} className="flex h-16 items-start">
-        <Input
+      <form onSubmit={handleSubmit}>
+        <input
           ref={inputRef}
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onBlur={() => setIsEditing(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setName(initialName);
+              setIsEditing(false);
+            }
+          }}
+          className={cn(
+            "mb-4 h-12 w-full border-b-2 border-b-primary bg-transparent font-bold text-5xl focus:outline-none",
+          )}
         />
       </form>
     );
@@ -61,7 +72,7 @@ export default function EditableName({
         }
       }}
       className={cn(
-        "mb-4 min-h-12 cursor-pointer rounded-md font-bold text-5xl",
+        "mb-4 h-12 cursor-pointer rounded-md font-bold text-5xl",
         "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       )}
     >
