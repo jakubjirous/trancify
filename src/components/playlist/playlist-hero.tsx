@@ -1,8 +1,8 @@
 "use client";
 
+import EditableName from "@/components/playlist/editable-name";
 import PlaylistCover from "@/components/playlist/playlist-cover";
 import PlaylistNavigation from "@/components/playlist/playlist-navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ import { deletePlaylistAction } from "@/lib/actions";
 import { PlaylistWithTracks } from "@/lib/db/types";
 import formatDuration from "@/utils/format-duration";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Disc3, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -32,7 +32,7 @@ export default function PlaylistHero({
 
   const { openDialog } = useAlertDialog();
 
-  async function handleDeletePlaylist(id: string) {
+  const handleDeletePlaylist = async (id: string) => {
     deletePlaylist(id);
 
     if (pathname === `${ROUTES.playlist}/${id}`) {
@@ -42,7 +42,7 @@ export default function PlaylistHero({
 
     deletePlaylistAction(id);
     router.refresh();
-  }
+  };
 
   return (
     <section className="flex flex-col gap-4 px-8 pt-4">
@@ -51,7 +51,7 @@ export default function PlaylistHero({
         <PlaylistCover playlistId={id} coverUrl={coverUrl} />
         <div className="flex h-40 flex-col justify-end">
           <h6 className="mb-2 font-medium text-sm">Playlist</h6>
-          <h1 className="mb-4 font-bold text-5xl">{name}</h1>
+          <EditableName playlistId={id} initialName={name} />
           <p className="mb-1 text-muted-foreground text-sm">
             <span>{tracksCount} tracks</span>
             <span className="px-2">•</span>
