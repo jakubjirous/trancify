@@ -26,9 +26,8 @@ export default function PlaylistCards({
       {playlistsWithArtists
         .slice(0, limit)
         .map(({ id, name, coverUrl, artists }) => (
-          <Card className="relative rounded-md border-none bg-muted">
+          <Card key={id} className="relative rounded-md border-none bg-muted">
             <Link
-              key={id}
               href={`${ROUTES.playlist}/${id}`}
               className={cn(
                 "group block rounded-md",
