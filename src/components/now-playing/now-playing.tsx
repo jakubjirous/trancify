@@ -73,7 +73,7 @@ export default function NowPlaying() {
               key={index}
               className="w-0.5 animate-wave-bar rounded-md rounded-tr-md bg-muted-foreground"
               style={{
-                animationDelay: `${index * Math.random() * 0.2}s`,
+                animationDelay: `${index * Math.random() * 0.1}s`,
               }}
             />
           ))}

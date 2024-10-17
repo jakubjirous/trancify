@@ -122,7 +122,7 @@ export default function TrackRow({
               <span className="sr-only">Track options</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuContent align="start" className="w-48">
             <DropdownMenuItem
               onClick={(e) => {
                 e.stopPropagation();
