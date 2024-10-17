@@ -21,5 +21,5 @@ export default async function updatePlaylistNameAction(
 
   revalidateTag("playlists");
 
-  revalidatePath(ROUTES.dashboard, "layout");
+  revalidatePath(ROUTES.playlist, "layout");
 }
