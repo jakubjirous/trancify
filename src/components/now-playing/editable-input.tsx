@@ -1,5 +1,6 @@
 "use client";
 
+import KEY from "@/config/keys";
 import { usePlayer } from "@/hooks/use-player";
 import { updateTrackAction } from "@/lib/actions";
 import { UpdateTrack } from "@/lib/db/types";
@@ -36,11 +37,10 @@ export default function EditableInput({
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  // @ts-ignore
   const [state, formAction, pending] = useActionState(updateTrackAction, {
     success: false,
     error: "",
-    result: {},
+    result: undefined,
   });
 
   const handleSubmit = () => {
@@ -56,10 +56,10 @@ export default function EditableInput({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === KEY.Enter) {
       e.preventDefault();
       handleSubmit();
-    } else if (e.key === "Escape") {
+    } else if (e.key === KEY.Escape) {
       setIsEditing(false);
       setValue(initialValue);
     }
@@ -84,7 +84,9 @@ export default function EditableInput({
 
     const timer = setTimeout(() => {
       setShowCheck(false);
-      updateTrack(state.result);
+      if (state.result) {
+        updateTrack(state.result);
+      }
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -138,13 +140,13 @@ export default function EditableInput({
           tabIndex={0}
           onClick={() => setIsEditing(true)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
+            if (e.key === KEY.Enter || e.key === KEY.Space) {
               e.preventDefault();
               setIsEditing(true);
             }
           }}
           className={cn(
-            "flex h-6 w-full items-center rounded-md border-b-2 border-b-transparent",
+            "flex h-6 w-full cursor-pointer items-center rounded-md border-b-2 border-b-transparent",
             "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           )}
         >
