@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import KEY from "@/config/keys";
 import { usePlaylist } from "@/hooks/use-playlist";
 import { updatePlaylistNameAction } from "@/lib/actions";
 import { cn } from "@/utils/cn";
@@ -48,7 +49,7 @@ export default function EditableName({
           onChange={(e) => setName(e.target.value)}
           onBlur={() => setIsEditing(false)}
           onKeyDown={(e) => {
-            if (e.key === "Escape") {
+            if (e.key === KEY.Escape) {
               setName(initialName);
               setIsEditing(false);
             }
@@ -66,13 +67,13 @@ export default function EditableName({
       tabIndex={0}
       onClick={() => setIsEditing(true)}
       onKeyDown={(e) => {
-        if (e.key === "Enter") {
+        if (e.key === KEY.Enter) {
           e.preventDefault();
           setIsEditing(true);
         }
       }}
       className={cn(
-        "mb-4 h-12 cursor-pointer rounded-md font-bold text-5xl",
+        "mb-4 h-12 cursor-pointer truncate rounded-md font-bold text-5xl",
         "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       )}
     >
