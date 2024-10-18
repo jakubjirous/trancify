@@ -2,9 +2,7 @@
 
 import EditableInput from "@/components/now-playing/editable-input";
 import TrackCover from "@/components/now-playing/track-cover";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePlayer } from "@/hooks/use-player";
-import { Disc3 } from "lucide-react";
 
 export default function NowPlaying() {
   const { currentTrack, isPlaying } = usePlayer();
