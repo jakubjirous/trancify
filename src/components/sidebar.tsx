@@ -1,5 +1,6 @@
 "use client";
 
+import KeyboardShortcuts from "@/components/keyboard-shortcuts";
 import SidebarPlaylists from "@/components/playlist/sidebar-playlists";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
@@ -77,6 +78,7 @@ export function Sidebar({ className }: SidebarProps) {
       <div className="flex flex-row items-start gap-3 px-7 pb-8">
         <UserNav />
         <ThemeSwitcher />
+        <KeyboardShortcuts />
       </div>
     </aside>
   );
