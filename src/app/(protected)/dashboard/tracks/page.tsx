@@ -9,7 +9,6 @@ export default async function TracksPage() {
   return (
     <section className="grid h-full grid-rows-[auto,minmax(0,1fr)]">
       <Title title="Your tracks" />
-
       <TableWithTracks tracks={tracks} />
     </section>
   );
