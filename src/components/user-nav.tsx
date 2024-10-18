@@ -37,8 +37,6 @@ export default function UserNav() {
     return null;
   }
 
-  const ICON_SIZE = 16;
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,7 +52,7 @@ export default function UserNav() {
             </Avatar>
           ) : (
             <>
-              <CircleUser size={ICON_SIZE} className="text-muted-foreground" />
+              <CircleUser className="size-4 text-muted-foreground" />
               <span className="sr-only">Toggle user menu</span>
             </>
           )}
