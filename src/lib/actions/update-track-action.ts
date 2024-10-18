@@ -1,13 +1,16 @@
 "use server";
 
 import ROUTES from "@/config/routes";
-import { UpdateTrack } from "@/lib/db/types";
+import { Track, UpdateTrack } from "@/lib/db/types";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 const prisma = new PrismaClient();
 
-export default async function updateTrackAction(_: any, formData: FormData) {
+export default async function updateTrackAction(
+  _: any,
+  formData: FormData,
+): Promise<{ success: boolean; error: string; result?: Track }> {
   const trackId = formData.get("trackId") as string;
   const field = formData.get("field") as string;
   let value = formData.get(field) as keyof UpdateTrack | number;
