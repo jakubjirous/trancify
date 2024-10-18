@@ -7,6 +7,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -25,6 +26,12 @@ type PlayerContextType = {
   setDuration: (duration: number) => void;
   setPlaylist: (tracks: Track[]) => void;
   audioRef: RefObject<HTMLAudioElement | null>;
+  volume: number;
+  isMuted: boolean;
+  updateVolume: (value: number[]) => void;
+  toggleMute: () => void;
+  increaseVolume: () => void;
+  decreaseVolume: () => void;
 
   // activePanel: Panel;
   // setActivePanel: (panel: Panel) => void;
@@ -47,6 +54,10 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [playlist, setPlaylist] = useState<Track[]>([]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const [volume, setVolume] = useState(100);
+
+  const [isMuted, setIsMuted] = useState(false);
 
   const togglePlayPause = useCallback(() => {
     if (audioRef.current) {
@@ -104,6 +115,58 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     [currentTrack, setCurrentTrack],
   );
 
+  const updateVolume = useCallback(
+    (value: number[]) => {
+      if (audioRef.current) {
+        const newVolume = value[0];
+        audioRef.current.volume = newVolume / 100;
+        setVolume(newVolume);
+        setIsMuted(newVolume === 0);
+      }
+    },
+    [audioRef, setVolume, setIsMuted],
+  );
+
+  const toggleMute = useCallback(() => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.volume = 0;
+        setIsMuted(false);
+      } else {
+        audioRef.current.volume = volume / 100;
+        setIsMuted(true);
+      }
+    }
+  }, [audioRef, isMuted, setIsMuted]);
+
+  const increaseVolume = useCallback(() => {
+    setVolume((prevVolume) => {
+      const newVolume = Math.min(prevVolume + 10, 100);
+      if (audioRef.current) {
+        audioRef.current.volume = newVolume / 100;
+        setIsMuted(false);
+      }
+      return newVolume;
+    });
+  }, [audioRef, setVolume, setIsMuted]);
+
+  const decreaseVolume = useCallback(() => {
+    setVolume((prevVolume) => {
+      const newVolume = Math.max(prevVolume - 10, 0);
+      if (audioRef.current) {
+        audioRef.current.volume = newVolume / 100;
+        setIsMuted(false);
+      }
+      return newVolume;
+    });
+  }, [audioRef, setVolume, setIsMuted]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume / 100;
+    }
+  }, [audioRef, isMuted, volume]);
+
   return (
     <PlayerContext.Provider
       value={{
@@ -120,10 +183,12 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         setDuration,
         setPlaylist,
         audioRef,
-        // activePanel,
-        // setActivePanel,
-        // registerPanelRef,
-        // handleKeyNavigation,
+        volume,
+        isMuted,
+        updateVolume,
+        toggleMute,
+        increaseVolume,
+        decreaseVolume,
       }}
     >
       {children}
