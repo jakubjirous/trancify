@@ -1,5 +1,6 @@
 import ROUTES from "@/config/routes";
 import { AlertDialogProvider } from "@/hooks/use-alert-dialog";
+import { KeyboardNavigationProvider } from "@/hooks/use-keyboard-navigation";
 import { PlayerProvider } from "@/hooks/use-player";
 import { PlaylistProvider } from "@/hooks/use-playlist";
 import { UserProvider } from "@/hooks/use-user";
@@ -32,7 +33,9 @@ export default async function ProtectedProviders({
         playlistsWithArtistsPromise={playlistsWithArtistsPromise}
       >
         <PlayerProvider>
-          <AlertDialogProvider>{children}</AlertDialogProvider>
+          <KeyboardNavigationProvider>
+            <AlertDialogProvider>{children}</AlertDialogProvider>
+          </KeyboardNavigationProvider>
         </PlayerProvider>
       </PlaylistProvider>
     </UserProvider>
