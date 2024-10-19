@@ -48,7 +48,9 @@ export default function UserNav() {
                 alt={user?.user_metadata?.email}
                 className="object-cover"
               />
-              <AvatarFallback>{user?.user_metadata?.email}</AvatarFallback>
+              <AvatarFallback>
+                <CircleUser className="size-4 text-muted-foreground" />
+              </AvatarFallback>
             </Avatar>
           ) : (
             <>
