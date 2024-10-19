@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -47,7 +49,7 @@ export default function TrackRow({
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const onClickTrackRow = (e: React.MouseEvent) => {
+  const onTableRowClick = (e: React.MouseEvent) => {
     e.preventDefault();
     // setActivePanel('tracklist');
     // onSelect();
@@ -60,7 +62,7 @@ export default function TrackRow({
 
   return (
     <TableRow
-      onClick={onClickTrackRow}
+      onClick={onTableRowClick}
       className={cn(
         "group cursor-pointer border-muted border-b",
         isCurrentTrack ? "bg-muted" : "",
@@ -123,72 +125,77 @@ export default function TrackRow({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-48">
-            <DropdownMenuItem
-              onClick={(e) => {
-                e.stopPropagation();
-                if (isCurrentTrack) {
-                  togglePlayPause();
-                } else {
-                  playTrack(track);
-                }
-              }}
-            >
-              {isCurrentTrack && isPlaying ? (
-                <>
-                  <Pause className="mr-2 size-3" />
-                  Pause
-                </>
-              ) : (
-                <>
-                  <Play className="mr-2 size-3" />
-                  Play
-                </>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <Plus className="mr-2 size-3" />
-                Add to Playlist
-              </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent className="w-56">
-                {playlists.map((playlist) => (
-                  <DropdownMenuItem
-                    key={playlist.id}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addToPlaylistAction(playlist.id, track.id);
-                    }}
-                  >
-                    {playlist.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
-            {playlist && (
+            <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={(e) => {
                   e.stopPropagation();
-                  openDialog({
-                    title: "Delete track from Playlist?",
-                    description: (
-                      <>
-                        This will delete{" "}
-                        <strong>
-                          {track.artist} – {track.name}
-                        </strong>{" "}
-                        from <strong>{playlist.name}</strong> playlist.
-                      </>
-                    ),
-                    cancelLabel: "Cancel",
-                    actionLabel: "Delete",
-                    onAction: () =>
-                      deleteTrackFromPlaylistAction(playlist.id, id),
-                  });
+                  if (isCurrentTrack) {
+                    togglePlayPause();
+                  } else {
+                    playTrack(track);
+                  }
                 }}
               >
-                <Trash className="mr-2 size-3" />
-                Delete from Playlist
+                {isCurrentTrack && isPlaying ? (
+                  <>
+                    <Pause className="mr-2 size-3" />
+                    Pause
+                  </>
+                ) : (
+                  <>
+                    <Play className="mr-2 size-3" />
+                    Play
+                  </>
+                )}
               </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Plus className="mr-2 size-3" />
+                  Add to Playlist
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent className="w-56">
+                  {playlists.map((playlist) => (
+                    <DropdownMenuItem
+                      key={playlist.id}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToPlaylistAction(playlist.id, track.id);
+                      }}
+                    >
+                      {playlist.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuGroup>
+            {playlist && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openDialog({
+                      title: "Delete track from Playlist?",
+                      description: (
+                        <>
+                          This will delete{" "}
+                          <strong>
+                            {track.artist} – {track.name}
+                          </strong>{" "}
+                          from <strong>{playlist.name}</strong> playlist.
+                        </>
+                      ),
+                      cancelLabel: "Cancel",
+                      actionLabel: "Delete",
+                      onAction: () =>
+                        deleteTrackFromPlaylistAction(playlist.id, id),
+                    });
+                  }}
+                >
+                  <Trash className="mr-2 size-3" />
+                  Delete from Playlist
+                </DropdownMenuItem>
+              </>
             )}
           </DropdownMenuContent>
         </DropdownMenu>
