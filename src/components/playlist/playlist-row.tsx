@@ -122,7 +122,8 @@ export default function PlaylistRow({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 openDialog({
                   title: "Delete from Your Library?",
                   description: (
@@ -134,8 +135,8 @@ export default function PlaylistRow({
                   cancelLabel: "Cancel",
                   actionLabel: "Delete",
                   onAction: () => handleDeletePlaylist(id),
-                })
-              }
+                });
+              }}
             >
               <Trash className="mr-2 size-3" />
               Delete Playlist
