@@ -4,13 +4,14 @@ import KeyboardShortcuts from "@/components/keyboard-shortcuts";
 import SidebarPlaylists from "@/components/playlist/sidebar-playlists";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
+import { InputWithIcon } from "@/components/ui/input-with-icon";
 import UserNav from "@/components/user-nav";
 import ROUTES from "@/config/routes";
 import { cn } from "@/utils/cn";
 import { House, ListMusic, Music2, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 interface SidebarProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -38,12 +39,16 @@ export function Sidebar({ className }: SidebarProps) {
               <Link href={ROUTES.dashboard}>
                 <House className="mr-2 size-4" />
                 Home
+                <Kbd>^1</Kbd>
               </Link>
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <Search className="mr-2 size-4" />
-              Search
-            </Button>
+
+            <InputWithIcon
+              startIcon={Search}
+              placeholder="Search"
+              kbd="^2"
+              data-search-input
+            />
           </div>
         </div>
         <div className="px-3 py-4">
@@ -59,6 +64,7 @@ export function Sidebar({ className }: SidebarProps) {
               <Link href={ROUTES.tracks}>
                 <Music2 className="mr-2 size-4" />
                 Tracks
+                <Kbd>^3</Kbd>
               </Link>
             </Button>
             <Button
@@ -69,6 +75,7 @@ export function Sidebar({ className }: SidebarProps) {
               <Link href={ROUTES.playlists}>
                 <ListMusic className="mr-2 size-4" />
                 Playlists
+                <Kbd>^4</Kbd>
               </Link>
             </Button>
           </div>
@@ -81,5 +88,19 @@ export function Sidebar({ className }: SidebarProps) {
         <KeyboardShortcuts />
       </div>
     </aside>
+  );
+}
+
+function Kbd({ children }: { children: ReactNode }) {
+  return (
+    <kbd className={cn("absolute right-1.5 flex items-center justify-center")}>
+      <span
+        className={cn(
+          "rounded-sm border px-2 py-1 font-mono text-inherit text-xs tracking-widest",
+        )}
+      >
+        {children}
+      </span>
+    </kbd>
   );
 }
