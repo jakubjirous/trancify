@@ -12,7 +12,7 @@ const createPlaylist = async (
   name: string,
   coverUrl?: string,
 ): Promise<Playlist> => {
-  let attempt = 0;
+  let attempt = 1;
   let newName = name;
 
   while (true) {
