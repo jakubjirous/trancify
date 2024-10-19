@@ -11,8 +11,19 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import KEY from "@/config/keys";
+import ROUTES from "@/config/routes";
 import { usePlayer } from "@/hooks/use-player";
-import { Key, Play, SkipBack, SkipForward } from "lucide-react";
+import {
+  House,
+  Keyboard,
+  ListMusic,
+  Music2,
+  Play,
+  Search,
+  SkipBack,
+  SkipForward,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
   Fragment,
   ReactNode,
@@ -31,7 +42,7 @@ type Command = {
   items: Item[];
 };
 
-type Group = "Player" | "Tracklist" | "Volume" | "General";
+type Group = "Player" | "Volume" | "Navigation" | "General";
 
 type Item = {
   icon?: ReactNode;
@@ -70,6 +81,8 @@ export function KeyboardNavigationProvider({
     decreaseVolume,
   } = usePlayer();
 
+  const router = useRouter();
+
   const [activePanel, setActivePanel] = useState<Panel>("sidebar");
 
   const [openCommands, setOpenCommands] = useState(false);
@@ -98,6 +111,44 @@ export function KeyboardNavigationProvider({
 
   const commands: Command[] = useMemo(() => {
     return [
+      {
+        group: "Navigation",
+        items: [
+          {
+            shortcuts: ["^ 1"],
+            keys: [`${KEY.Control}${KEY.Digit1}`],
+            description: "Home",
+            icon: <House className="mr-2 size-4" />,
+            action: () => router.push(ROUTES.dashboard),
+          },
+          {
+            shortcuts: ["^ 2"],
+            keys: [`${KEY.Control}${KEY.Digit2}`],
+            description: "Search",
+            icon: <Search className="mr-2 size-4" />,
+            action: () => {
+              const searchInput = document.querySelector(
+                "[data-search-input]",
+              ) as HTMLInputElement | null;
+              searchInput?.focus();
+            },
+          },
+          {
+            shortcuts: ["^ 3"],
+            keys: [`${KEY.Control}${KEY.Digit3}`],
+            description: "Tracks",
+            icon: <Music2 className="mr-2 size-4" />,
+            action: () => router.push(ROUTES.tracks),
+          },
+          {
+            shortcuts: ["^ 4"],
+            keys: [`${KEY.Control}${KEY.Digit4}`],
+            description: "Playlists",
+            icon: <ListMusic className="mr-2 size-4" />,
+            action: () => router.push(ROUTES.playlists),
+          },
+        ],
+      },
       {
         group: "Player",
         items: [
@@ -151,16 +202,13 @@ export function KeyboardNavigationProvider({
         ],
       },
       {
-        group: "Tracklist",
-        items: [],
-      },
-      {
         group: "General",
         items: [
           {
-            shortcuts: ["⌘ K"],
-            keys: [`${KEY.Cmd}${KEY.K}`],
+            shortcuts: ["/"],
+            keys: [KEY.ForwardSlash],
             description: "Open keyboard shortcuts",
+            icon: <Keyboard className="mr-2 size-4" />,
             action: () => toggleKeyboardCommands(),
           },
         ],
@@ -169,6 +217,8 @@ export function KeyboardNavigationProvider({
   }, [
     togglePlayPause,
     toggleMute,
+    increaseVolume,
+    decreaseVolume,
     playPreviousTrack,
     playNextTrack,
     toggleKeyboardCommands,
@@ -254,7 +304,7 @@ export function KeyboardNavigationProvider({
                         {shortcuts.map((shortcut, idx3) => (
                           <CommandShortcut
                             key={idx3}
-                            className="-my-0.5 rounded-md border border-foreground bg-foreground px-2 py-1 text-background"
+                            className="-my-0.5 rounded-md border border-muted-foreground px-2 py-1"
                           >
                             {shortcut}
                           </CommandShortcut>
