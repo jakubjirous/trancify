@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
+import { Keyboard } from "lucide-react";
 
 export default function KeyboardShortcuts() {
   const { setOpenCommands } = useKeyboardNavigation();
@@ -13,9 +14,7 @@ export default function KeyboardShortcuts() {
       className="rounded-full"
       onClick={() => setOpenCommands(true)}
     >
-      <kbd className="flex items-center gap-1 text-muted-foreground">
-        <span className="text-lg">⌘</span> <span className="text-xs">K</span>
-      </kbd>
+      <Keyboard className="size-4 text-muted-foreground" />
       <span className="sr-only">Open keyboard shortcuts</span>
     </Button>
   );
