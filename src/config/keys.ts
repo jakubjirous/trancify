@@ -24,10 +24,11 @@ const enum KEY {
   Digit6 = "6",
   Digit7 = "7",
   Digit8 = "8",
-
   Digit9 = "9",
+
   Plus = "+",
   Minus = "-",
+  ForwardSlash = "/",
 
   A = "a",
   B = "b",
