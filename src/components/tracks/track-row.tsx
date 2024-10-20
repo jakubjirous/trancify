@@ -14,7 +14,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import KEY from "@/config/keys";
 import { useAlertDialog } from "@/hooks/use-alert-dialog";
+import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { usePlayer } from "@/hooks/use-player";
 import { usePlaylist } from "@/hooks/use-playlist";
 import {
@@ -24,6 +26,7 @@ import {
 import { PlaylistWithTracks, Track } from "@/lib/db/types";
 import { cn } from "@/utils/cn";
 import formatDuration from "@/utils/format-duration";
+import highlightText from "@/utils/highlight-text";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Disc3, Pause, Play, Plus, Trash } from "lucide-react";
 import React, { useState } from "react";
@@ -32,10 +35,16 @@ export default function TrackRow({
   track,
   playlist,
   index,
+  onSelect,
+  isSelected,
+  search,
 }: {
   track: Track;
   playlist?: PlaylistWithTracks;
   index: number;
+  isSelected: boolean;
+  onSelect: () => void;
+  search?: string;
 }) {
   const { id, coverUrl, name, artist, album, duration } = track;
 
@@ -43,16 +52,20 @@ export default function TrackRow({
 
   const { playlists } = usePlaylist();
 
+  const { setActivePanel, handleKeyNavigation } = useKeyboardNavigation();
+
   const { openDialog } = useAlertDialog();
 
-  const isCurrentTrack = currentTrack?.name === name;
+  const [isFocused, setIsFocused] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const onTableRowClick = (e: React.MouseEvent) => {
+  const isCurrentTrack = currentTrack?.name === name;
+
+  const onClickTableRow = (e: React.MouseEvent) => {
     e.preventDefault();
-    // setActivePanel('tracklist');
-    // onSelect();
+    setActivePanel("tracklist");
+    onSelect();
     if (isCurrentTrack) {
       togglePlayPause();
     } else {
@@ -60,12 +73,28 @@ export default function TrackRow({
     }
   };
 
+  const onKeyDownTableRow = (e: React.KeyboardEvent<HTMLTableRowElement>) => {
+    if (e.key === KEY.Enter || e.key === KEY.Space) {
+      e.preventDefault();
+      onSelect();
+      isCurrentTrack ? togglePlayPause() : playTrack(track);
+    } else {
+      handleKeyNavigation(e, "tracklist");
+    }
+  };
+
   return (
     <TableRow
-      onClick={onTableRowClick}
+      tabIndex={0}
+      onClick={onClickTableRow}
+      onKeyDown={onKeyDownTableRow}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       className={cn(
-        "group cursor-pointer border-muted border-b",
-        isCurrentTrack ? "bg-muted" : "",
+        "group relative cursor-pointer border-muted border-b",
+        "select-none outline-none",
+        isCurrentTrack ? "bg-primary/10 dark:bg-primary/30" : "",
+        isSelected || isFocused ? "border-b-transparent" : "",
       )}
     >
       <TableCell className="w-16 pl-8 font-medium text-muted-foreground">
@@ -100,14 +129,18 @@ export default function TrackRow({
             </Avatar>
           </div>
           <div>
-            <div className="whitespace-nowrap font-medium">{name}</div>
+            <div className="whitespace-nowrap font-medium">
+              {highlightText(name, search)}
+            </div>
             <div className="whitespace-nowrap text-muted-foreground text-sm">
-              {artist}
+              {highlightText(artist, search)}
             </div>
           </div>
         </div>
       </TableCell>
-      <TableCell className="whitespace-nowrap">{album}</TableCell>
+      <TableCell className="whitespace-nowrap">
+        {highlightText(album ?? "", search)}
+      </TableCell>
       <TableCell className="pr-8 text-right">
         {formatDuration(duration)}
       </TableCell>
@@ -200,6 +233,14 @@ export default function TrackRow({
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
+      {(isSelected || isFocused) && (
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 z-10 border",
+            isFocused ? "border-primary" : "",
+          )}
+        />
+      )}
     </TableRow>
   );
 }

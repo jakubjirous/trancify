@@ -11,8 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import KEY from "@/config/keys";
 import ROUTES from "@/config/routes";
 import { useAlertDialog } from "@/hooks/use-alert-dialog";
+import { useKeyboardNavigation } from "@/hooks/use-keyboard-navigation";
 import { usePlaylist } from "@/hooks/use-playlist";
 import { deletePlaylistAction } from "@/lib/actions";
 import { PlaylistWithArtists } from "@/lib/db/types";
@@ -24,12 +26,18 @@ import React, { useCallback, useMemo, useState } from "react";
 
 export default function PlaylistRow({
   playlist,
+  onSelect,
+  isSelected,
 }: {
   playlist: PlaylistWithArtists;
+  isSelected: boolean;
+  onSelect: () => void;
 }) {
   const { id, coverUrl, name, artists } = playlist;
 
   const { deletePlaylist } = usePlaylist();
+
+  const { setActivePanel, handleKeyNavigation } = useKeyboardNavigation();
 
   const { openDialog } = useAlertDialog();
 
@@ -37,11 +45,25 @@ export default function PlaylistRow({
 
   const router = useRouter();
 
+  const [isFocused, setIsFocused] = useState(false);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const onTableRowClick = (e: React.MouseEvent) => {
+  const onClickTableRow = (e: React.MouseEvent) => {
     e.preventDefault();
+    setActivePanel("sidebar");
+    onSelect();
     openPlaylist();
+  };
+
+  const onKeyDownTableRow = (e: React.KeyboardEvent<HTMLTableRowElement>) => {
+    if (e.key === KEY.Enter || e.key === KEY.Space) {
+      e.preventDefault();
+      onSelect();
+      openPlaylist();
+    } else {
+      handleKeyNavigation(e, "sidebar");
+    }
   };
 
   const openPlaylist = useCallback(() => {
@@ -60,19 +82,22 @@ export default function PlaylistRow({
     router.refresh();
   };
 
-  const isActive = (id: string) =>
-    useMemo(() => pathname === `${ROUTES.playlist}/${id}`, [pathname]);
+  const isActive = pathname === `${ROUTES.playlist}/${id}`;
 
   return (
     <TableRow
-      onClick={onTableRowClick}
-      className="group relative cursor-pointer border-muted border-b"
+      tabIndex={0}
+      onClick={onClickTableRow}
+      onKeyDown={onKeyDownTableRow}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+      className={cn(
+        "group relative cursor-pointer border-muted border-b",
+        "select-none outline-none",
+        isActive ? "bg-primary/10 dark:bg-primary/30" : "",
+        isSelected || isFocused ? "border-b-transparent" : "",
+      )}
     >
-      <TableCell className="absolute ml-0.5 flex h-full items-center justify-center">
-        <span className={cn(isActive(id) ? "visible" : "hidden")}>
-          <Circle className="h-2 w-2 fill-current" />
-        </span>
-      </TableCell>
       <TableCell className="pl-7">
         <div className="flex items-center space-x-4">
           <div className="relative size-10">
@@ -144,6 +169,14 @@ export default function PlaylistRow({
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
+      {(isSelected || isFocused) && (
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 border",
+            isFocused ? "border-primary" : "",
+          )}
+        />
+      )}
     </TableRow>
   );
 }
