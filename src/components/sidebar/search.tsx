@@ -17,7 +17,11 @@ export default function Search() {
     "-translate-y-1/2 absolute top-1/2 size-4 text-foreground peer-focus:text-foreground";
 
   useEffect(() => {
-    router.replace(`${ROUTES.tracks}?search=${encodeURIComponent(value)}`);
+    if (value) {
+      router.replace(`${ROUTES.tracks}?search=${encodeURIComponent(value)}`);
+    } else {
+      router.replace(ROUTES.tracks);
+    }
   }, [router, value]);
 
   return (
