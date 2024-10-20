@@ -21,7 +21,7 @@ const CONFIG: Config = {
     initialScale: 1,
     maximumScale: 1,
     viewportFit: "cover",
-    themeColor: "", // TODO: add theme color in HEX (Jakub Jirous 2024-10-05 13:53:12)
+    themeColor: "#7c3aed",
   },
 };
 
