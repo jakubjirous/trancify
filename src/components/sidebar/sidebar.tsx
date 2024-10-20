@@ -2,13 +2,13 @@
 
 import KeyboardShortcuts from "@/components/keyboard-shortcuts";
 import SidebarPlaylists from "@/components/playlist/sidebar-playlists";
+import Search from "@/components/sidebar/search";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
-import { InputWithIcon } from "@/components/ui/input-with-icon";
 import UserNav from "@/components/user-nav";
 import ROUTES from "@/config/routes";
 import { cn } from "@/utils/cn";
-import { House, ListMusic, Music2, Search } from "lucide-react";
+import { House, ListMusic, Music2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HTMLAttributes, ReactNode } from "react";
@@ -43,12 +43,7 @@ export function Sidebar({ className }: SidebarProps) {
               </Link>
             </Button>
 
-            <InputWithIcon
-              startIcon={Search}
-              placeholder="Search"
-              kbd="^2"
-              data-search-input
-            />
+            <Search />
           </div>
         </div>
         <div className="px-3 py-4">
