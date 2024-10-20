@@ -3,7 +3,7 @@
  * @param name
  */
 export default function normalizeArtistName(name: string): string[] {
-  const conjunctions = ["and", "&", "feat", "feat.", "with", "vs", "vs."];
+  const conjunctions = ["and", "feat", "feat.", "with", "vs", "vs."];
 
   const artistNames = name
     .split(new RegExp(`\\s(${conjunctions.join("|")})\\s`))
