@@ -6,7 +6,7 @@ import { useAlertDialog } from "@/hooks/use-alert-dialog";
 import { uploadTrackCoverAction } from "@/lib/actions";
 import { cn } from "@/utils/cn";
 import { Disc3, Loader2, Upload } from "lucide-react";
-import React, { ChangeEvent, useActionState } from "react";
+import React, { ChangeEvent, useActionState, useMemo } from "react";
 
 export default function TrackCover({
   trackId,
@@ -19,7 +19,10 @@ export default function TrackCover({
     coverUrl: "",
   });
 
-  const currentCoverUrl = state.success ? state.coverUrl : coverUrl;
+  const currentCoverUrl = useMemo(
+    () => (state.success ? state.coverUrl : coverUrl),
+    [trackId, coverUrl],
+  );
 
   const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
