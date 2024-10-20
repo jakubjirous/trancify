@@ -24,7 +24,7 @@ export default function TableWithPlaylists({
   }, [registerPanelRef]);
 
   return (
-    <ScrollArea className="h-[30rem]">
+    <ScrollArea className="h-[21rem]">
       <Table
         ref={tableRef}
         className="w-full"

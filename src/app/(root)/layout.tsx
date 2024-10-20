@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <ProtectedProviders>
-      <div className="grid h-dvh grid-cols-[24rem,4fr] grid-rows-[1fr,8rem] overflow-clip text-foreground">
+      <div className="grid h-dvh grid-cols-[20rem,4fr] grid-rows-[1fr,8rem] overflow-clip text-foreground">
         <Sidebar />
         <main className="flex h-[calc(100dvh-8rem)] justify-between">
           <div className="w-full">{children}</div>

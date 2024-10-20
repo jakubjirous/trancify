@@ -15,7 +15,7 @@ export default function NowPlaying() {
     currentTrack;
 
   return (
-    <aside className="flex h-full w-full max-w-96 flex-col justify-between border-l border-l-muted">
+    <aside className="flex h-full w-full max-w-[20rem] flex-col justify-between border-l border-l-muted">
       <div className="pt-4">
         <div className="px-3 py-4">
           <h2 className="mb-2 px-4 font-semibold text-xl tracking-tight">
@@ -66,7 +66,7 @@ export default function NowPlaying() {
       </div>
       {isPlaying && (
         <div className="flex w-full items-end gap-0.5">
-          {Array.from({ length: 96 }, (_, index) => (
+          {Array.from({ length: 80 }, (_, index) => (
             <div
               key={index}
               className="w-0.5 animate-wave-bar rounded-md rounded-tr-md bg-muted-foreground"

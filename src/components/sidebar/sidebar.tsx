@@ -21,7 +21,7 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "flex flex-col justify-between border-r border-r-muted",
+        "grid h-[calc(100dvh-8rem)] grid-rows-[minmax(0,1fr),4rem] justify-between border-r border-r-muted",
         className,
       )}
     >
@@ -42,7 +42,6 @@ export function Sidebar({ className }: SidebarProps) {
                 <Kbd>^1</Kbd>
               </Link>
             </Button>
-
             <Search />
           </div>
         </div>
@@ -77,7 +76,7 @@ export function Sidebar({ className }: SidebarProps) {
         </div>
         <SidebarPlaylists />
       </div>
-      <div className="flex flex-row items-start gap-3 px-7 pb-8">
+      <div className="flex flex-row items-center gap-3 px-7 pb-4">
         <UserNav />
         <ThemeSwitcher />
         <KeyboardShortcuts />

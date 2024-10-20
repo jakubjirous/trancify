@@ -92,7 +92,7 @@ export default function PlaylistRow({
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       className={cn(
-        "group relative cursor-pointer border-muted border-b",
+        "group relative w-full cursor-pointer border-muted border-b",
         "select-none outline-none",
         isActive ? "bg-primary/10 dark:bg-primary/30" : "",
         isSelected || isFocused ? "border-b-transparent" : "",
@@ -112,9 +112,9 @@ export default function PlaylistRow({
               </AvatarFallback>
             </Avatar>
           </div>
-          <div>
-            <div className="whitespace-nowrap font-medium">{name}</div>
-            <div className="whitespace-nowrap text-muted-foreground text-sm">
+          <div className="max-w-[calc(14rem-60px)]">
+            <div className="truncate whitespace-nowrap font-medium">{name}</div>
+            <div className="truncate whitespace-nowrap text-muted-foreground text-sm">
               {artists}
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import TrancifyLogo from "@/components/trancify-logo";
 import {
   Card,
   CardContent,
@@ -10,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ROUTES from "@/config/routes";
 import { forgotPasswordAction } from "@/lib/supabase/actions";
-import { Music } from "lucide-react";
 import Link from "next/link";
 
 export default async function ForgotPassword({
@@ -24,10 +24,8 @@ export default async function ForgotPassword({
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md border border-white border-opacity-10 bg-background text-foreground text-white shadow-2xl backdrop-blur-sm">
         <CardHeader className="relative text-center">
-          <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary p-3 shadow-lg">
-            <Music className="h-8 w-8 animate-pulse text-primary-foreground" />
-          </div>
-          <h1 className="mb-2 pt-4 font-bold font-heading text-4xl text-foreground">
+          <TrancifyLogo />
+          <h1 className="mb-2 pt-6 font-bold font-heading text-4xl text-foreground">
             Reset Password
           </h1>
           <p className="text-zinc-400">

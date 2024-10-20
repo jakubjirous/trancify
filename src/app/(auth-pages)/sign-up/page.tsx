@@ -1,5 +1,6 @@
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
+import TrancifyLogo from "@/components/trancify-logo";
 import {
   Card,
   CardContent,
@@ -31,10 +32,8 @@ export default async function SignUp({
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md border border-white border-opacity-10 bg-background text-foreground text-white shadow-2xl backdrop-blur-sm">
         <CardHeader className="relative text-center">
-          <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary p-3 shadow-lg">
-            <Music className="h-8 w-8 animate-pulse text-primary-foreground" />
-          </div>
-          <h1 className="mb-2 pt-4 font-bold font-heading text-4xl text-foreground">
+          <TrancifyLogo />
+          <h1 className="mb-2 pt-6 font-bold font-heading text-4xl text-foreground">
             Trancify
           </h1>
           <p className="text-muted-foreground">Press Play to Start Your Set</p>
@@ -80,7 +79,7 @@ export default async function SignUp({
               className="gap-2"
               color="secondary"
             >
-              <Github className="h-[1em] w-[1em]" />
+              <Github className="size-[1em]" />
               <span>Sign up with GitHub</span>
             </SubmitButton>
           </form>
