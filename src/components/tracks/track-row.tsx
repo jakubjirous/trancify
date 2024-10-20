@@ -124,7 +124,7 @@ export default function TrackRow({
                 className="object-cover"
               />
               <AvatarFallback className="rounded-md">
-                <Disc3 className="size-10" />
+                <Disc3 className="size-8" />
               </AvatarFallback>
             </Avatar>
           </div>

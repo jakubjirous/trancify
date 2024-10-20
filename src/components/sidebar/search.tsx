@@ -33,10 +33,7 @@ export default function Search() {
         data-search-input
         type="search"
         placeholder="Search"
-        className={cn(
-          "px-10",
-          "[&::-webkit-search-cancel-button]:appearance-none",
-        )}
+        className={cn("px-10")}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />

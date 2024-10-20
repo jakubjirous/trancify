@@ -20,7 +20,7 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "grid h-[calc(100dvh-8rem)] grid-rows-[minmax(0,1fr),4rem] justify-between border-r border-r-muted",
+        "grid h-[calc(100dvh-8rem)] w-full grid-rows-[minmax(0,1fr),4rem] border-r border-r-muted",
         className,
       )}
     >
@@ -32,10 +32,10 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="space-y-1">
             <Button
               asChild
-              variant={pathname === `${ROUTES.dashboard}` ? "default" : "ghost"}
+              variant={pathname === `${ROUTES.root}` ? "default" : "ghost"}
               className="w-full justify-start"
             >
-              <Link href={ROUTES.dashboard}>
+              <Link href={ROUTES.root}>
                 <House className="mr-2 size-4" />
                 Home
                 <Kbd>^1</Kbd>

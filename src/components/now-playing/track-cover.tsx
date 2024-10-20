@@ -47,7 +47,7 @@ export default function TrackCover({
           className="object-cover"
         />
         <AvatarFallback className="rounded-md object-cover">
-          <Disc3 className="size-32" />
+          <Disc3 className="size-40" />
         </AvatarFallback>
       </Avatar>
 

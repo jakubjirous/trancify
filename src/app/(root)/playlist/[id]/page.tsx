@@ -20,7 +20,7 @@ export default async function PlaylistPage({
   return (
     <div className="relative grid h-full grid-rows-[18rem,minmax(0,1fr)] gap-y-4 bg-gradient-to-b from-transparent to-40% to-background">
       <div
-        className="-z-10 absolute inset-0 animate-scale-image bg-center bg-cover opacity-30"
+        className="-z-10 absolute inset-0 animate-scale-image bg-center bg-cover opacity-15"
         style={{ backgroundImage: `url(${playlist.coverUrl})` }}
       />
       <PlaylistHero playlist={playlist} />

@@ -8,6 +8,8 @@ import { createId } from "@paralleldrive/cuid2";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+
 export default function AddPlaylist({
   size = "full",
 }: { size?: "icon" | "full" }) {
@@ -24,6 +26,7 @@ export default function AddPlaylist({
       coverUrl: "",
       createdAt: new Date(),
       updatedAt: new Date(),
+      isLocal: true,
     };
 
     updatePlaylist(newPlaylistId, newPlaylist);
@@ -36,12 +39,17 @@ export default function AddPlaylist({
   return (
     <form action={addPlaylistAction}>
       {size === "icon" ? (
-        <Button size={size} variant="ghost" type="submit">
+        <Button
+          size={size}
+          variant="ghost"
+          type="submit"
+          disabled={isProduction}
+        >
           <Plus className="size-5" />
           <span className="sr-only">Add new playlist</span>
         </Button>
       ) : (
-        <Button size="sm">
+        <Button size="sm" disabled={isProduction}>
           <Plus className="mr-2 size-5" />
           Add new playlist
         </Button>

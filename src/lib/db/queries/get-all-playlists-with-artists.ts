@@ -2,14 +2,16 @@
 
 import normalizeArtistName from "@/utils/normalize-artist-name";
 import { PrismaClient } from "@prisma/client";
-import { User } from "@supabase/auth-js";
 import { unstable_cache } from "next/cache";
 
 const prisma = new PrismaClient();
 
 const getAllPlaylistsWithArtists = unstable_cache(
-  async () => {
+  async (isLocal: boolean) => {
     const playlists = await prisma.playlist.findMany({
+      where: {
+        isLocal,
+      },
       include: {
         tracks: {
           include: {

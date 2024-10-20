@@ -21,6 +21,8 @@ import { Trash } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
+const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+
 export default function PlaylistHero({
   playlist: { id, name, coverUrl, tracksCount, duration, artists },
 }: { playlist: PlaylistWithTracks }) {
@@ -36,8 +38,8 @@ export default function PlaylistHero({
     deletePlaylist(id);
 
     if (pathname === `${ROUTES.playlist}/${id}`) {
-      router.prefetch(ROUTES.dashboard);
-      router.push(ROUTES.dashboard);
+      router.prefetch(ROUTES.root);
+      router.push(ROUTES.root);
     }
 
     deletePlaylistAction(id);
@@ -75,6 +77,7 @@ export default function PlaylistHero({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-48">
             <DropdownMenuItem
+              disabled={isProduction}
               onClick={() =>
                 openDialog({
                   title: "Delete from Your Library?",

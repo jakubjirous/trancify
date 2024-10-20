@@ -6,10 +6,12 @@ import { getAllPlaylists, getAllPlaylistsWithArtists } from "@/lib/db/queries";
 import { ThemeProvider } from "next-themes";
 import { ReactNode } from "react";
 
-export default function GlobalProviders({ children }: { children: ReactNode }) {
-  const playlistsPromise = getAllPlaylists();
+const isLocal = process.env.NEXT_PUBLIC_VERCEL_ENV !== "production";
 
-  const playlistsWithArtistsPromise = getAllPlaylistsWithArtists();
+export default function GlobalProviders({ children }: { children: ReactNode }) {
+  const playlistsPromise = getAllPlaylists(isLocal);
+
+  const playlistsWithArtistsPromise = getAllPlaylistsWithArtists(isLocal);
 
   return (
     <ThemeProvider
