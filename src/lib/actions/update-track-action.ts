@@ -30,7 +30,7 @@ export default async function updateTrackAction(
 
   revalidateTag("tracks");
 
-  revalidatePath(ROUTES.dashboard, "layout");
+  revalidatePath(ROUTES.root, "layout");
 
   return { success: true, error: "", result };
 }

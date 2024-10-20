@@ -5,7 +5,6 @@ import SidebarPlaylists from "@/components/playlist/sidebar-playlists";
 import Search from "@/components/sidebar/search";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
-import UserNav from "@/components/user-nav";
 import ROUTES from "@/config/routes";
 import { cn } from "@/utils/cn";
 import { House, ListMusic, Music2 } from "lucide-react";
@@ -21,7 +20,7 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "grid h-[calc(100dvh-8rem)] grid-rows-[minmax(0,1fr),4rem] justify-between border-r border-r-muted",
+        "grid h-[calc(100dvh-8rem)] w-full grid-rows-[minmax(0,1fr),4rem] border-r border-r-muted",
         className,
       )}
     >
@@ -33,10 +32,10 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="space-y-1">
             <Button
               asChild
-              variant={pathname === `${ROUTES.dashboard}` ? "default" : "ghost"}
+              variant={pathname === `${ROUTES.root}` ? "default" : "ghost"}
               className="w-full justify-start"
             >
-              <Link href={ROUTES.dashboard}>
+              <Link href={ROUTES.root}>
                 <House className="mr-2 size-4" />
                 Home
                 <Kbd>^1</Kbd>
@@ -77,7 +76,6 @@ export function Sidebar({ className }: SidebarProps) {
         <SidebarPlaylists />
       </div>
       <div className="flex flex-row items-center gap-3 px-7 pb-4">
-        <UserNav />
         <ThemeSwitcher />
         <KeyboardShortcuts />
       </div>

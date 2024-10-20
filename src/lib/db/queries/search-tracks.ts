@@ -6,9 +6,10 @@ import { unstable_cache } from "next/cache";
 const prisma = new PrismaClient();
 
 const searchTracks = unstable_cache(
-  async (searchTerm: string) => {
+  async (isLocal: boolean, searchTerm: string) => {
     return prisma.track.findMany({
       where: {
+        isLocal,
         OR: [
           {
             name: {

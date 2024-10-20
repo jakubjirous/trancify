@@ -20,9 +20,11 @@ import { deletePlaylistAction } from "@/lib/actions";
 import { PlaylistWithArtists } from "@/lib/db/types";
 import { cn } from "@/utils/cn";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Circle, Disc3, Trash } from "lucide-react";
+import { Disc3, Trash } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
+
+const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
 
 export default function PlaylistRow({
   playlist,
@@ -74,8 +76,8 @@ export default function PlaylistRow({
     deletePlaylist(id);
 
     if (pathname === `${ROUTES.playlist}/${id}`) {
-      router.prefetch(ROUTES.dashboard);
-      router.push(ROUTES.dashboard);
+      router.prefetch(ROUTES.root);
+      router.push(ROUTES.root);
     }
 
     deletePlaylistAction(id);
@@ -98,7 +100,7 @@ export default function PlaylistRow({
         isSelected || isFocused ? "border-b-transparent" : "",
       )}
     >
-      <TableCell className="pl-7">
+      <TableCell className="w-full pl-7">
         <div className="flex items-center space-x-4">
           <div className="relative size-10">
             <Avatar className="flex size-10 items-center justify-center space-y-0 rounded-md">
@@ -112,7 +114,7 @@ export default function PlaylistRow({
               </AvatarFallback>
             </Avatar>
           </div>
-          <div className="max-w-[calc(14rem-60px)]">
+          <div>
             <div className="truncate whitespace-nowrap font-medium">{name}</div>
             <div className="truncate whitespace-nowrap text-muted-foreground text-sm">
               {artists}
@@ -147,6 +149,7 @@ export default function PlaylistRow({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
+              disabled={isProduction}
               onClick={(e) => {
                 e.stopPropagation();
                 openDialog({

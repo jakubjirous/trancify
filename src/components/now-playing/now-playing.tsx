@@ -11,11 +11,10 @@ export default function NowPlaying() {
     return null;
   }
 
-  const { id, name, coverUrl, artist, album, featuring, genre, bpm } =
-    currentTrack;
+  const { id, name, coverUrl, artist, album, genre, bpm } = currentTrack;
 
   return (
-    <aside className="flex h-full w-full max-w-[20rem] flex-col justify-between border-l border-l-muted">
+    <aside className="hidden h-full w-full max-w-[20rem] flex-col justify-between border-l border-l-muted xl:flex 2xl:max-w-[24rem]">
       <div className="pt-4">
         <div className="px-3 py-4">
           <h2 className="mb-2 px-4 font-semibold text-xl tracking-tight">
@@ -40,12 +39,6 @@ export default function NowPlaying() {
           />
           <EditableInput
             trackId={id}
-            initialValue={featuring ?? "–"}
-            label="Featuring"
-            field="featuring"
-          />
-          <EditableInput
-            trackId={id}
             initialValue={album ?? "–"}
             label="Album"
             field="album"
@@ -66,7 +59,7 @@ export default function NowPlaying() {
       </div>
       {isPlaying && (
         <div className="flex w-full items-end gap-0.5">
-          {Array.from({ length: 80 }, (_, index) => (
+          {Array.from({ length: 96 }, (_, index) => (
             <div
               key={index}
               className="w-0.5 animate-wave-bar rounded-md rounded-tr-md bg-muted-foreground"

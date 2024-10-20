@@ -166,7 +166,7 @@ export function KeyboardNavigationProvider({
             keys: [`${KEY.Control}${KEY.Digit1}`],
             description: "Home",
             icon: <House className="mr-2 size-4" />,
-            action: () => router.push(ROUTES.dashboard),
+            action: () => router.push(ROUTES.root),
           },
           {
             shortcuts: ["^ 2"],
@@ -254,7 +254,7 @@ export function KeyboardNavigationProvider({
           {
             shortcuts: ["/"],
             keys: [KEY.ForwardSlash],
-            description: "Open keyboard shortcuts",
+            description: "Toggle keyboard shortcuts",
             icon: <Keyboard className="mr-2 size-4" />,
             action: () => toggleKeyboardCommands(),
           },

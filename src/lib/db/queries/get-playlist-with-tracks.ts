@@ -2,18 +2,16 @@
 
 import normalizeArtistName from "@/utils/normalize-artist-name";
 import { PrismaClient } from "@prisma/client";
-import { User } from "@supabase/auth-js";
 import { unstable_cache } from "next/cache";
 import { Playlist } from "../types";
 
 const prisma = new PrismaClient();
 
 const getPlaylistWithTracks = unstable_cache(
-  async (user: User, playlistId: Playlist["id"]) => {
+  async (playlistId: Playlist["id"]) => {
     const playlist = await prisma.playlist.findUnique({
       where: {
         id: playlistId,
-        userId: user.id,
       },
       include: {
         tracks: {

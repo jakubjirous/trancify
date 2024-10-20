@@ -18,7 +18,7 @@ export default function TrackInfo() {
               className="object-cover"
             />
             <AvatarFallback className="rounded-md">
-              <Disc3 className="size-16" />
+              <Disc3 className="size-12" />
             </AvatarFallback>
           </Avatar>
           <div>

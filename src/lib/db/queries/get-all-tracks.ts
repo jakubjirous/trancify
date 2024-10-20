@@ -4,8 +4,11 @@ import { unstable_cache } from "next/cache";
 const prisma = new PrismaClient();
 
 const getAllTracks = unstable_cache(
-  async (limit?: number) => {
+  async (isLocal: boolean, limit?: number) => {
     return prisma.track.findMany({
+      where: {
+        isLocal,
+      },
       take: limit,
       orderBy: {
         name: "asc",

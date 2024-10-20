@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^0.0.51",
-    "@prisma/client": "5.20.0",
+    "@prisma/client": "5.21.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -80,7 +80,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "prisma": "^5.20.0"
+    "prisma": "^5.21.1"
   },
   "prisma": {
     "schema": "src/lib/db/schema.prisma"

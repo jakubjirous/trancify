@@ -15,7 +15,6 @@ const supabase = createClient(
 const prisma = new PrismaClient();
 
 const TRACKS_DIR = path.join(process.cwd(), "tracks");
-const USER_ID = "bfff5ab8-d2ab-4225-bf60-85b84cbc95c1";
 
 async function seed() {
   console.log("Starting seed process...");
@@ -26,6 +25,7 @@ async function seed() {
 }
 
 async function sanitizeTracks() {
+  console.log("1) Sanitize tracks...");
   const files = await fs.readdir(TRACKS_DIR);
 
   files.forEach((file) => {
@@ -41,6 +41,7 @@ async function sanitizeTracks() {
 }
 
 async function seedTracks() {
+  console.log("2) Seed tracks...");
   let files = await fs.readdir(TRACKS_DIR);
 
   for (let file of files.filter(
@@ -49,6 +50,8 @@ async function seedTracks() {
     let filePath = path.join(TRACKS_DIR, file);
     let buffer = await fs.readFile(filePath);
     let metadata = await parseBuffer(buffer, { mimeType: "audio/mpeg" });
+
+    let coverUrl = "";
 
     if (metadata.common.picture && metadata.common.picture.length > 0) {
       let metaPicture = metadata.common.picture[0];
@@ -73,87 +76,89 @@ async function seedTracks() {
         .from("covers")
         .getPublicUrl(`tracks/${coverFilename}`);
 
-      let coverUrl = coverData.publicUrl;
-
-      let { error: audioError } = await supabase.storage
-        .from("tracks")
-        .upload(`audio/${file}`, buffer, {
-          contentType: "audio/mpeg",
-          upsert: true,
-        });
-
-      if (audioError) {
-        console.error("Audio upload failed:", audioError);
-      }
-
-      const { data: audioData } = supabase.storage
-        .from("tracks")
-        .getPublicUrl(`audio/${file}`);
-
-      let audioUrl = audioData.publicUrl;
-
-      let trackData = {
-        name: metadata.common.title || path.parse(file).name,
-        artist: metadata.common.artist || "Unknown Artist",
-        album: metadata.common.album || "Unknown Album",
-        duration: Math.round(metadata.format.duration || 0),
-        genre: metadata.common.genre?.[0] || "Unknown Genre",
-        bpm: metadata.common.bpm ? Math.round(metadata.common.bpm) : null,
-        coverUrl,
-        audioUrl,
-        isLocal: false,
-      };
-
-      await prisma.track.upsert({
-        where: {
-          audioUrl: trackData.audioUrl,
-        },
-        update: {
-          ...trackData,
-        },
-        create: {
-          ...trackData,
-        },
-      });
-
-      const upsertTrack = await prisma.track.upsert({
-        where: {
-          audioUrl: trackData.audioUrl,
-        },
-        update: {
-          ...trackData,
-        },
-        create: {
-          ...trackData,
-        },
-      });
-
-      console.log("upsertTrack", upsertTrack);
+      coverUrl = coverData.publicUrl;
     }
+
+    let { error: audioError } = await supabase.storage
+      .from("tracks")
+      .upload(`audio/${file}`, buffer, {
+        contentType: "audio/mpeg",
+        upsert: true,
+      });
+
+    if (audioError) {
+      console.error("Audio upload failed:", audioError);
+    }
+
+    const { data: audioData } = supabase.storage
+      .from("tracks")
+      .getPublicUrl(`audio/${file}`);
+
+    let audioUrl = audioData.publicUrl;
+
+    let trackData = {
+      name: metadata.common.title || path.parse(file).name,
+      artist: metadata.common.artist || "Unknown Artist",
+      album: metadata.common.album || "Unknown Album",
+      duration: Math.round(metadata.format.duration || 0),
+      genre: metadata.common.genre?.[0] || "Unknown Genre",
+      bpm: metadata.common.bpm ? Math.round(metadata.common.bpm) : null,
+      coverUrl,
+      audioUrl,
+      isLocal: false, // TODO:  (Jakub Jirous 2024-10-20 12:56:49)
+    };
+
+    await prisma.track.upsert({
+      where: {
+        audioUrl: trackData.audioUrl,
+      },
+      update: {
+        ...trackData,
+      },
+      create: {
+        ...trackData,
+      },
+    });
+
+    const upsertTrack = await prisma.track.upsert({
+      where: {
+        audioUrl: trackData.audioUrl,
+      },
+      update: {
+        ...trackData,
+      },
+      create: {
+        ...trackData,
+      },
+    });
+
+    console.log("upsertTrack", upsertTrack);
   }
 }
 
 async function seedPlaylists() {
+  console.log("3) Seed playlists...");
+
   const playlistsTemp = [
     {
       name: "A State Of Trance",
       coverUrl:
-        "https://randomwordgenerator.com/img/picture-generator/55e9d7444c5aa914f1dc8460962e33791c3ad6e04e5074417c2d78d19e44cd_640.jpg",
+        "https://i1.sndcdn.com/artworks-000002835317-ay6ism-t500x500.jpg",
     },
     {
-      name: "Trance Around the World",
+      name: "Resonation Radio",
       coverUrl:
-        "https://randomwordgenerator.com/img/picture-generator/5fe1d546434faa0df7c5d57bc32f3e7b1d3ac3e4565871497c2d72d296_640.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVpHefuqSsyPP2iQjr-1kYQcClu8O3Po8PDQ&s",
     },
     {
       name: "Global DJ Broadcast",
       coverUrl:
-        "https://randomwordgenerator.com/img/picture-generator/57e5d3454b53ac14f1dc8460962e33791c3ad6e04e507440752f72d79448c4_640.jpg",
+        "https://edmliveset.b-cdn.net/wp-content/uploads/2023/05/Global-DJ-Broadcast.webp",
     },
     {
-      name: "The Gareth Emery Podcast",
+      name: "Group Therapy",
       coverUrl:
-        "https://randomwordgenerator.com/img/picture-generator/52e0d34a4f55b10ff3d8992cc12c30771037dbf85254794e73287adc914e_640.jpg",
+        "https://i1.sndcdn.com/artworks-000064619587-vfncfp-t500x500.jpg",
     },
   ];
 
@@ -167,7 +172,7 @@ async function seedPlaylists() {
       create: {
         name,
         coverUrl,
-        userId: USER_ID,
+        isLocal: false, // TODO:  (Jakub Jirous 2024-10-20 12:56:49)
       },
     });
 
@@ -190,7 +195,6 @@ async function seedPlaylists() {
         trackId: track.id,
         playlistId: playlist.id,
         order: index,
-        userId: USER_ID,
       }));
 
     await prisma.tracksInPlaylists.createMany({
