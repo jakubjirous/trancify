@@ -8,7 +8,7 @@ export interface InputProps
   kbd?: string;
 }
 
-const InputWithIcon = React.forwardRef<HTMLInputElement, InputProps>(
+const SearchInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, startIcon, endIcon, kbd, ...props }, ref) => {
     const StartIcon = startIcon;
     const EndIcon = endIcon;
@@ -48,6 +48,6 @@ const InputWithIcon = React.forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
-InputWithIcon.displayName = "InputWithIcon";
+SearchInput.displayName = "InputWithIcon";
 
-export { InputWithIcon };
+export { SearchInput };
