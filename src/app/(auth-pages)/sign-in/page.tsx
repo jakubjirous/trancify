@@ -28,7 +28,7 @@ export default async function SignIn({
           <h1 className="mb-2 pt-4 font-bold font-heading text-4xl text-foreground">
             Trancify
           </h1>
-          <p className="text-zinc-400">Sign in to start your journey</p>
+          <p className="text-zinc-400">Press Play to Start Your Set</p>
         </CardHeader>
         <CardContent className="space-y-6">
           <form className="flex flex-col text-foreground">

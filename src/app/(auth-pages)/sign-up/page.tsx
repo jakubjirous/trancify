@@ -37,7 +37,7 @@ export default async function SignUp({
           <h1 className="mb-2 pt-4 font-bold font-heading text-4xl text-foreground">
             Trancify
           </h1>
-          <p className="text-zinc-400">Sign up to start your journey</p>
+          <p className="text-muted-foreground">Press Play to Start Your Set</p>
         </CardHeader>
         <CardContent className="space-y-6">
           <form className="flex flex-col gap-8 text-foreground">
@@ -88,7 +88,7 @@ export default async function SignUp({
           <FormMessage message={message} />
         </CardContent>
         <CardFooter className="justify-center">
-          <p className="flex flex-col items-center text-sm text-zinc-400">
+          <p className="flex flex-col items-center text-muted-foreground text-sm">
             <span>Already have an account?</span>
             <Link className="text-foreground underline" href={ROUTES.signIn}>
               Sign in here
