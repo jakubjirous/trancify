@@ -53,13 +53,13 @@ type Item = {
   disabled?: boolean;
 };
 
-type Panel = "sidebar" | "tracklist" | "playing";
+type Panel = "sidebar" | "tracklist";
 
 type KeyboardNavigationContextType = {
   activePanel: Panel;
   setActivePanel: (panel: Panel) => void;
   registerPanelRef: (panel: Panel, ref: RefObject<HTMLElement>) => void;
-  handleKeyNavigation: (e: KeyboardEvent, panel: Panel) => void;
+  handleKeyNavigation: (e: React.KeyboardEvent, panel: Panel) => void;
   openCommands: boolean;
   setOpenCommands: (open: boolean) => void;
 };
@@ -90,7 +90,6 @@ export function KeyboardNavigationProvider({
   const panelRefs = useRef<Record<Panel, RefObject<HTMLElement> | null>>({
     sidebar: null,
     tracklist: null,
-    playing: null,
   });
 
   const registerPanelRef = useCallback(
@@ -101,7 +100,55 @@ export function KeyboardNavigationProvider({
   );
 
   const handleKeyNavigation = useCallback(
-    (e: KeyboardEvent, panel: Panel) => {},
+    (e: React.KeyboardEvent, panel: Panel) => {
+      const currentRef = panelRefs.current[panel];
+
+      if (!currentRef?.current) return;
+
+      const items = Array.from(
+        currentRef.current.querySelectorAll(`[tabindex="0"]`),
+      );
+
+      const currentIndex = items.indexOf(document.activeElement as HTMLElement);
+
+      switch (e.key) {
+        case KEY.ArrowUp:
+          e.preventDefault();
+          const prevIndex = (currentIndex - 1 + items.length) % items.length;
+          (items[prevIndex] as HTMLElement)?.focus();
+          break;
+
+        case KEY.ArrowDown:
+          e.preventDefault();
+          const nextIndex = (currentIndex + 1) % items.length;
+          (items[nextIndex] as HTMLElement)?.focus();
+          break;
+
+        case KEY.ArrowLeft:
+          if (panel === "tracklist") {
+            e.preventDefault();
+            setActivePanel("sidebar");
+            const sidebarFirstItem =
+              panelRefs.current?.sidebar?.current.querySelector(
+                `[tabindex="0"]`,
+              ) as HTMLElement | null;
+            sidebarFirstItem?.focus();
+          }
+          break;
+
+        case KEY.ArrowRight:
+          if (panel === "sidebar") {
+            e.preventDefault();
+            setActivePanel("tracklist");
+            const tracklistFirstItem =
+              panelRefs.current?.tracklist?.current.querySelector(
+                `[tabindex="0"]`,
+              ) as HTMLElement | null;
+            tracklistFirstItem?.focus();
+          }
+          break;
+      }
+    },
     [],
   );
 
@@ -225,8 +272,8 @@ export function KeyboardNavigationProvider({
     currentTrack,
   ]);
 
-  const handleGlobalKeyNavigation = useCallback(
-    (e: KeyboardEvent) => {
+  useEffect(() => {
+    const handleGlobalKeyNavigation = (e: KeyboardEvent) => {
       if (e.target !== document.body) return;
 
       const isKeyMatched = (key: string, event: KeyboardEvent) => {
@@ -255,16 +302,13 @@ export function KeyboardNavigationProvider({
         e.preventDefault();
         matchedCommand.action();
       }
-    },
-    [commands],
-  );
+    };
 
-  useEffect(() => {
     window.addEventListener("keydown", handleGlobalKeyNavigation);
 
     return () =>
       window.removeEventListener("keydown", handleGlobalKeyNavigation);
-  }, [handleGlobalKeyNavigation]);
+  }, [commands]);
 
   return (
     <KeyboardNavigationContext.Provider
