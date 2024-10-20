@@ -13,14 +13,16 @@ export default function Search() {
 
   const [value, setValue] = useState("");
 
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const iconStyle =
     "-translate-y-1/2 absolute top-1/2 size-4 text-foreground peer-focus:text-foreground";
 
   useEffect(() => {
-    if (value) {
+    if (isInitialized) {
       router.replace(`${ROUTES.tracks}?search=${encodeURIComponent(value)}`);
     } else {
-      router.replace(ROUTES.tracks);
+      setIsInitialized(true);
     }
   }, [router, value]);
 
@@ -32,7 +34,7 @@ export default function Search() {
         type="search"
         placeholder="Search"
         className={cn(
-          "z-10 px-10",
+          "px-10",
           "[&::-webkit-search-cancel-button]:appearance-none",
         )}
         value={value}
