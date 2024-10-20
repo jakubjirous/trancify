@@ -32,12 +32,6 @@ type PlayerContextType = {
   toggleMute: () => void;
   increaseVolume: () => void;
   decreaseVolume: () => void;
-
-  // activePanel: Panel;
-  // setActivePanel: (panel: Panel) => void;
-  // registerPanelRef: (panel: Panel, ref: React.RefObject<HTMLElement>) => void;
-  //
-  // handleKeyNavigation: (e: React.KeyboardEvent, panel: Panel) => void;
 };
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -70,20 +64,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     }
   }, [isPlaying]);
 
-  const playTrack = useCallback(
-    (track: Track) => {
-      setCurrentTrack(track);
-      setIsPlaying(true);
-      setCurrentTime(0);
+  const playTrack = useCallback((track: Track) => {
+    setCurrentTrack(track);
+    setIsPlaying(true);
+    setCurrentTime(0);
 
-      if (audioRef.current) {
-        audioRef.current.src = track.audioUrl;
-        audioRef.current.play();
-      }
-      // setActivePanel("tracklist");
-    },
-    [], // [setActivePanel],
-  );
+    if (audioRef.current) {
+      audioRef.current.src = track.audioUrl;
+      audioRef.current.play();
+    }
+  }, []);
 
   const playNextTrack = useCallback(() => {
     if (currentTrack && playlist.length > 0) {
