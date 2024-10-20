@@ -4,8 +4,10 @@ import TableWithTracks from "@/components/tracks/table-with-tracks";
 import { getAllTracks } from "@/lib/db/queries";
 import React from "react";
 
+const isLocal = process.env.NEXT_PUBLIC_VERCEL_ENV !== "production";
+
 export default async function Page() {
-  const tracks = await getAllTracks(5);
+  const tracks = await getAllTracks(isLocal, 5);
 
   return (
     <div className="grid h-full grid-rows-[16rem,minmax(0,1fr)] gap-y-8">

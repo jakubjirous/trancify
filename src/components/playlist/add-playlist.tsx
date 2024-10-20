@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/config/routes";
 import { usePlaylist } from "@/hooks/use-playlist";
-import { useUser } from "@/hooks/use-user";
 import { createPlaylistAction } from "@/lib/actions";
 import { Playlist } from "@/lib/db/types";
 import { createId } from "@paralleldrive/cuid2";
@@ -14,8 +13,6 @@ export default function AddPlaylist({
 }: { size?: "icon" | "full" }) {
   const router = useRouter();
 
-  const { user } = useUser();
-
   const { updatePlaylist } = usePlaylist();
 
   const addPlaylistAction = async () => {
@@ -25,7 +22,6 @@ export default function AddPlaylist({
       id: newPlaylistId,
       name: "Trancify Playlist",
       coverUrl: "",
-      userId: user.id,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -33,7 +29,7 @@ export default function AddPlaylist({
     updatePlaylist(newPlaylistId, newPlaylist);
     router.prefetch(`${ROUTES.playlist}/${newPlaylistId}`);
     router.push(`${ROUTES.playlist}/${newPlaylistId}`);
-    createPlaylistAction(user.id, newPlaylistId, newPlaylist.name);
+    createPlaylistAction(newPlaylistId, newPlaylist.name);
     router.refresh();
   };
 

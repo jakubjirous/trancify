@@ -1,9 +1,7 @@
 import PlaylistHero from "@/components/playlist/playlist-hero";
 import TableWithTracks from "@/components/tracks/table-with-tracks";
-import ROUTES from "@/config/routes";
 import { getPlaylistWithTracks } from "@/lib/db/queries";
-import { createClient } from "@/lib/supabase/server";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import React from "react";
 
 export default async function PlaylistPage({
@@ -13,18 +11,7 @@ export default async function PlaylistPage({
 }) {
   const { id } = await params;
 
-  // TODO: remove and use useUser hook instead (Jakub Jirous 2024-10-11 08:36:45)
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect(ROUTES.signIn);
-  }
-
-  const playlist = await getPlaylistWithTracks(user, id);
+  const playlist = await getPlaylistWithTracks(id);
 
   if (!playlist) {
     notFound();

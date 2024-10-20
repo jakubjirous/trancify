@@ -7,7 +7,6 @@ import { revalidateTag } from "next/cache";
 const prisma = new PrismaClient();
 
 const createPlaylist = async (
-  userId: string,
   playlistId: string,
   name: string,
   coverUrl?: string,
@@ -19,7 +18,6 @@ const createPlaylist = async (
     const existingPlaylist = await prisma.playlist.findFirst({
       where: {
         name: newName,
-        userId,
       },
     });
 
@@ -36,7 +34,6 @@ const createPlaylist = async (
       id: playlistId,
       name: newName,
       coverUrl: coverUrl ?? "",
-      userId,
     },
   });
 

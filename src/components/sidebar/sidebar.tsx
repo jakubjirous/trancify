@@ -5,7 +5,6 @@ import SidebarPlaylists from "@/components/playlist/sidebar-playlists";
 import Search from "@/components/sidebar/search";
 import ThemeSwitcher from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
-import UserNav from "@/components/user-nav";
 import ROUTES from "@/config/routes";
 import { cn } from "@/utils/cn";
 import { House, ListMusic, Music2 } from "lucide-react";
@@ -77,7 +76,6 @@ export function Sidebar({ className }: SidebarProps) {
         <SidebarPlaylists />
       </div>
       <div className="flex flex-row items-center gap-3 px-7 pb-4">
-        <UserNav />
         <ThemeSwitcher />
         <KeyboardShortcuts />
       </div>

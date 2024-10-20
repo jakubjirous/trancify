@@ -44,7 +44,6 @@ model Playlist {
   id       String  @id @default(cuid())
   name     String  @unique
   coverUrl String?
-  userId   String // Supabase Auth userID
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -62,8 +61,7 @@ model TracksInPlaylists {
   playlist   Playlist @relation(fields: [playlistId], references: [id])
   playlistId String
 
-  order  Int
-  userId String @default("bfff5ab8-d2ab-4225-bf60-85b84cbc95c1") // Supabase Auth userID
+  order Int
 
   @@id([trackId, playlistId])
   @@index([trackId], name: "idx_tracks_in_playlists_track_id")

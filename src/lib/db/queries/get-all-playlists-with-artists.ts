@@ -8,11 +8,8 @@ import { unstable_cache } from "next/cache";
 const prisma = new PrismaClient();
 
 const getAllPlaylistsWithArtists = unstable_cache(
-  async (user: User) => {
+  async () => {
     const playlists = await prisma.playlist.findMany({
-      where: {
-        userId: user.id,
-      },
       include: {
         tracks: {
           include: {

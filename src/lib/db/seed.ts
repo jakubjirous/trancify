@@ -15,7 +15,6 @@ const supabase = createClient(
 const prisma = new PrismaClient();
 
 const TRACKS_DIR = path.join(process.cwd(), "tracks");
-const USER_ID = "bfff5ab8-d2ab-4225-bf60-85b84cbc95c1";
 
 async function seed() {
   console.log("Starting seed process...");
@@ -101,7 +100,7 @@ async function seedTracks() {
         bpm: metadata.common.bpm ? Math.round(metadata.common.bpm) : null,
         coverUrl,
         audioUrl,
-        isLocal: false,
+        isLocal: true, // TODO:  (Jakub Jirous 2024-10-20 12:56:49)
       };
 
       await prisma.track.upsert({
@@ -167,7 +166,6 @@ async function seedPlaylists() {
       create: {
         name,
         coverUrl,
-        userId: USER_ID,
       },
     });
 
@@ -190,7 +188,6 @@ async function seedPlaylists() {
         trackId: track.id,
         playlistId: playlist.id,
         order: index,
-        userId: USER_ID,
       }));
 
     await prisma.tracksInPlaylists.createMany({
