@@ -16,13 +16,15 @@ export default function TrackCover({
 
   const [state, formAction, pending] = useActionState(uploadTrackCoverAction, {
     success: false,
+    trackId: "",
     coverUrl: "",
   });
 
-  const currentCoverUrl = useMemo(
-    () => (state.success ? state.coverUrl : coverUrl),
-    [trackId, coverUrl],
-  );
+  const currentCoverUrl = useMemo(() => {
+    return state?.success && state?.trackId === trackId
+      ? state.coverUrl
+      : coverUrl;
+  }, [trackId, coverUrl]);
 
   const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -53,7 +55,6 @@ export default function TrackCover({
           <Disc3 className="size-40" />
         </AvatarFallback>
       </Avatar>
-
       <form
         action={formAction}
         tabIndex={0}

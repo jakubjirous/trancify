@@ -1,35 +1,29 @@
 "use server";
 
-import getFileTypeFromFilename from "@/utils/get-file-type-from-filename";
+import deleteAllFilesFromPlaylistFolder from "@/lib/actions/delete-all-files-from-playlist-folder";
 import { PrismaClient } from "@prisma/client";
-import { createClient } from "@supabase/supabase-js";
 import { revalidateTag } from "next/cache";
 
 const prisma = new PrismaClient();
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-);
-
 export default async function deletePlaylistAction(playlistId: string) {
+  if (process.env.VERCEL_ENV === "production") {
+    return;
+  }
+
   await prisma.tracksInPlaylists.deleteMany({
     where: {
       playlistId,
     },
   });
 
-  const deletePlaylist = await prisma.playlist.delete({
+  await prisma.playlist.delete({
     where: {
       id: playlistId,
     },
   });
 
-  const fileType = getFileTypeFromFilename(deletePlaylist.coverUrl!);
-
-  await supabase.storage
-    .from("covers")
-    .remove([`playlists/${playlistId}.${fileType}`]);
+  await deleteAllFilesFromPlaylistFolder(playlistId);
 
   revalidateTag("playlists");
 }

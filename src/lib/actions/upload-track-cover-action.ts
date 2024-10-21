@@ -1,7 +1,6 @@
 "use server";
 
 import ROUTES from "@/config/routes";
-import getFileTypeFromFilename from "@/utils/get-file-type-from-filename";
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -25,12 +24,22 @@ export default async function uploadTrackCoverAction(
     throw new Error("No file provided");
   }
 
-  const fileType = getFileTypeFromFilename(file.name);
+  const filename = file.name;
 
   try {
+    const { data: allFiles } = await supabase.storage
+      .from("covers")
+      .list(`tracks/${trackId}`);
+
+    const filesToDelete = allFiles
+      ? allFiles.map((file) => `tracks/${trackId}/${file.name}`)
+      : [];
+
+    await supabase.storage.from("covers").remove(filesToDelete);
+
     const { error: uploadError } = await supabase.storage
       .from("covers")
-      .upload(`tracks/${trackId}.${fileType}`, file, {
+      .upload(`tracks/${trackId}/${filename}`, file, {
         upsert: true,
       });
 
@@ -40,7 +49,7 @@ export default async function uploadTrackCoverAction(
 
     const { data: coverData } = supabase.storage
       .from("covers")
-      .getPublicUrl(`tracks/${trackId}.${fileType}`);
+      .getPublicUrl(`tracks/${trackId}/${filename}`);
 
     const coverUrl = coverData.publicUrl;
 
@@ -54,9 +63,9 @@ export default async function uploadTrackCoverAction(
     });
 
     revalidateTag("tracks");
-    revalidatePath(`${ROUTES.playlist}/${trackId}`);
+    revalidatePath(ROUTES.root, "layout");
 
-    return { success: true, coverUrl };
+    return { success: true, trackId, coverUrl };
   } catch (error) {
     console.error("Error uploading file:", error);
     throw new Error("Failed to upload file");

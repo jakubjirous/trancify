@@ -20,7 +20,7 @@ async function seed() {
   console.log("Starting seed process...");
   await sanitizeTracks();
   await seedTracks();
-  await seedPlaylists();
+  // await seedPlaylists();
   console.log("Seed process completed successfully.");
 }
 
@@ -105,7 +105,7 @@ async function seedTracks() {
       bpm: metadata.common.bpm ? Math.round(metadata.common.bpm) : null,
       coverUrl,
       audioUrl,
-      isLocal: false, // TODO:  (Jakub Jirous 2024-10-20 12:56:49)
+      isLocal: true,
     };
 
     await prisma.track.upsert({
@@ -172,7 +172,7 @@ async function seedPlaylists() {
       create: {
         name,
         coverUrl,
-        isLocal: false, // TODO:  (Jakub Jirous 2024-10-20 12:56:49)
+        isLocal: true,
       },
     });
 

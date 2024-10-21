@@ -1,7 +1,7 @@
 "use server";
 
 import ROUTES from "@/config/routes";
-import getFileTypeFromFilename from "@/utils/get-file-type-from-filename";
+import deleteAllFilesFromPlaylistFolder from "@/lib/actions/delete-all-files-from-playlist-folder";
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -25,12 +25,14 @@ export default async function uploadPlaylistCoverAction(
     throw new Error("No file provided");
   }
 
-  const fileType = getFileTypeFromFilename(file.name);
+  const filename = file.name;
 
   try {
+    await deleteAllFilesFromPlaylistFolder(playlistId);
+
     const { error: uploadError } = await supabase.storage
       .from("covers")
-      .upload(`playlists/${playlistId}.${fileType}`, file, {
+      .upload(`playlists/${playlistId}/${filename}`, file, {
         upsert: true,
       });
 
@@ -40,7 +42,7 @@ export default async function uploadPlaylistCoverAction(
 
     const { data: coverData } = supabase.storage
       .from("covers")
-      .getPublicUrl(`playlists/${playlistId}.${fileType}`);
+      .getPublicUrl(`playlists/${playlistId}/${filename}`);
 
     const coverUrl = coverData.publicUrl;
 
@@ -56,7 +58,7 @@ export default async function uploadPlaylistCoverAction(
     revalidateTag("playlists");
     revalidatePath(`${ROUTES.playlist}/${playlistId}`);
 
-    return { success: true, coverUrl };
+    return { success: true, playlistId, coverUrl };
   } catch (error) {
     console.error("Error uploading file:", error);
     throw new Error("Failed to upload file");
