@@ -1,4 +1,6 @@
 import path from "path";
+import sanitizeFilename from "@/utils/sanitize-filename";
+import { createId } from "@paralleldrive/cuid2";
 import { PrismaClient } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
@@ -18,22 +20,19 @@ const TRACKS_DIR = path.join(process.cwd(), "tracks");
 
 async function seed() {
   console.log("Starting seed process...");
-  await sanitizeTracks();
+  await sanitizeFilenames();
   await seedTracks();
   // await seedPlaylists();
   console.log("Seed process completed successfully.");
 }
 
-async function sanitizeTracks() {
-  console.log("1) Sanitize tracks...");
+async function sanitizeFilenames() {
+  console.log("1) Sanitize filenames...");
   const files = await fs.readdir(TRACKS_DIR);
 
-  files.forEach((file) => {
-    const oldPath = path.join(TRACKS_DIR, file);
-    const newFileName = file
-      .toLocaleLowerCase()
-      .replace(/ /g, "_")
-      .replace(/[^(\w|\/|!|-|\.|\*|'|\(|\)| |&|\$|@|=|;|:|\+|,|\?)]/g, "_");
+  files.forEach((filename) => {
+    const oldPath = path.join(TRACKS_DIR, filename);
+    const newFileName = sanitizeFilename(filename);
 
     const newPath = path.join(TRACKS_DIR, newFileName);
     fs.rename(oldPath, newPath);
@@ -52,6 +51,7 @@ async function seedTracks() {
     let metadata = await parseBuffer(buffer, { mimeType: "audio/mpeg" });
 
     let coverUrl = "";
+    let trackId = createId();
 
     if (metadata.common.picture && metadata.common.picture.length > 0) {
       let metaPicture = metadata.common.picture[0];
@@ -63,7 +63,7 @@ async function seedTracks() {
 
       let { error: uploadError } = await supabase.storage
         .from("covers")
-        .upload(`tracks/${coverFilename}`, coverBuffer, {
+        .upload(`tracks/${trackId}/${coverFilename}`, coverBuffer, {
           contentType: metaPicture.format || "image/jpeg",
           upsert: true,
         });
@@ -74,7 +74,7 @@ async function seedTracks() {
 
       const { data: coverData } = supabase.storage
         .from("covers")
-        .getPublicUrl(`tracks/${coverFilename}`);
+        .getPublicUrl(`tracks/${trackId}/${coverFilename}`);
 
       coverUrl = coverData.publicUrl;
     }
@@ -97,6 +97,7 @@ async function seedTracks() {
     let audioUrl = audioData.publicUrl;
 
     let trackData = {
+      id: trackId,
       name: metadata.common.title || path.parse(file).name,
       artist: metadata.common.artist || "Unknown Artist",
       album: metadata.common.album || "Unknown Album",
