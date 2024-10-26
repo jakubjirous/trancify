@@ -52,11 +52,11 @@ export default function TableWithTracks({
           <TableRow className="border-muted border-b">
             <TableHead className="w-10 pl-8">#</TableHead>
             <TableHead>Title</TableHead>
-            <TableHead>Album</TableHead>
+            <TableHead className="hidden md:table-cell">Album</TableHead>
             <TableHead className="w-10 pr-8 text-right">
               <Clock className="ml-auto size-4" />
             </TableHead>
-            <TableHead>
+            <TableHead className="hidden md:table-cell">
               <span className="sr-only">Actions</span>
             </TableHead>
           </TableRow>

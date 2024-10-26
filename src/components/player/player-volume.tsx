@@ -35,7 +35,7 @@ export default function PlayerVolume() {
         value={[uiVolume]}
         step={1}
         max={100}
-        className="w-24"
+        className="hidden w-24 md:flex"
         onValueChange={updateVolume}
       />
     </div>

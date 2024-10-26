@@ -20,7 +20,7 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "grid h-[calc(100dvh-8rem)] w-full grid-rows-[minmax(0,1fr),4rem] border-r border-r-muted",
+        "hidden h-[calc(100dvh-8rem)] w-full grid-rows-[minmax(0,1fr),4rem] border-r border-r-muted md:grid",
         className,
       )}
     >

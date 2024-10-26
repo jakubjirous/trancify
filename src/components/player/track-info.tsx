@@ -21,7 +21,7 @@ export default function TrackInfo() {
               <Disc3 className="size-12" />
             </AvatarFallback>
           </Avatar>
-          <div>
+          <div className="hidden md:block">
             <h3 className="">{currentTrack.name}</h3>
             <p className="text-muted-foreground text-sm">
               {currentTrack.artist}

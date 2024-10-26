@@ -128,17 +128,17 @@ export default function TrackRow({
               </AvatarFallback>
             </Avatar>
           </div>
-          <div>
-            <div className="whitespace-nowrap font-medium">
+          <div className="max-w-40 md:max-w-full">
+            <div className="truncate font-medium">
               {highlightText(name, search)}
             </div>
-            <div className="whitespace-nowrap text-muted-foreground text-sm">
+            <div className="truncate text-muted-foreground text-sm">
               {highlightText(artist, search)}
             </div>
           </div>
         </div>
       </TableCell>
-      <TableCell className="whitespace-nowrap">
+      <TableCell className="hidden truncate md:table-cell">
         {highlightText(album ?? "", search)}
       </TableCell>
       <TableCell className="pr-8 text-right">
@@ -146,7 +146,7 @@ export default function TrackRow({
       </TableCell>
       <TableCell
         className={cn(
-          "opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100",
+          "hidden opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100 md:block",
           dropdownOpen ? "opacity-100" : "",
         )}
       >
